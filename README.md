@@ -1,4 +1,4 @@
-# Ionic Firebase Shopping Cart App
+# SLIIT SEP - 2 - Client Mobile App
 
 ### FoodKart Shopping App
 
