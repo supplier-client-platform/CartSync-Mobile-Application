@@ -1,10 +1,9 @@
-angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function ($scope, $firebase, $restClient, $rootScope, $ionicSideMenuDelegate, fireBaseData, $state, $ionicHistory, $firebaseArray, sharedCartService, sharedUtils) {
+angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function($scope, $firebase, $restClient, $rootScope, $ionicSideMenuDelegate, fireBaseData, $state, $ionicHistory, $firebaseArray, sharedCartService, sharedUtils) {
     //Check if user already logged in
-    firebase.auth().onAuthStateChanged(function (user) {
+    firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             $scope.user_info = user; //Saves data to user_info
-        }
-        else {
+        } else {
             $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
             $ionicSideMenuDelegate.canDragContent(false); // To remove the sidemenu white space
             $ionicHistory.nextViewOptions({
@@ -21,13 +20,13 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
     $ionicSideMenuDelegate.canDragContent(true);
     $rootScope.extras = true;
     // When user visits A-> B -> C -> A and clicks back, he will close the app instead of back linking
-    $scope.$on('$ionicView.enter', function (ev) {
+    $scope.$on('$ionicView.enter', function(ev) {
         if (ev.targetScope !== $scope) {
             $ionicHistory.clearHistory();
             $ionicHistory.clearCache();
         }
     });
-    $scope.loadMenu = function () {
+    $scope.loadMenu = function() {
         $scope.onlyNumbers = /^\d+$/;
 
         // sharedUtils.showLoading();
@@ -38,39 +37,39 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
         // });
         // sharedUtils.hideLoading();
 
-        $restClient.getProducts(function (msg) {
+        $restClient.getProducts(function(msg) {
             console.log(JSON.stringify(msg));
             $scope.menu = msg.products;
         });
     }
 
-    $scope.dedQty = function (a) {
+    $scope.dedQty = function(a) {
         console.log(a);
     };
 
-    $scope.addQty = function (a) {
+    $scope.addQty = function(a) {
         var x = parseInt(a);
         document.getElementById("input_" + a).value = x++;
 
         console.log(a);
     };
 
-    $scope.addItem = function () {
+    $scope.addItem = function() {
         alert("a: ");
     };
 
-    $scope.showProductInfo = function (id) { };
-    $scope.addToCart = function (item) {
+    $scope.showProductInfo = function(id) {};
+    $scope.addToCart = function(item) {
         sharedCartService.add(item);
     };
 
-    $scope.getUserDetails = function () {
-        $restClient.getUserDetails(function (msg) {
+    $scope.getUserDetails = function() {
+        $restClient.getUserDetails(function(msg) {
             console.log(JSON.stringify(msg));
         });
     };
 
-    $scope.getPost = function () {
+    $scope.getPost = function() {
         // $restClient.getPost(1,function(msg){
         //     console.log(JSON.stringify(msg));
         // });
@@ -82,4 +81,5 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
         // });
 
     };
+
 })
