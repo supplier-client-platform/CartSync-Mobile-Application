@@ -26,6 +26,11 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
             $ionicHistory.clearCache();
         }
     });
+
+    $scope.isActive = function() {
+        return true;
+    };
+
     $scope.loadMenu = function() {
         $scope.onlyNumbers = /^\d+$/;
 
