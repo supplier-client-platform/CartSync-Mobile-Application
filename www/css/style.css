@@ -7,7 +7,9 @@
     width: 50px;
 }
 
-
+.sidebar-item{
+    color: white;
+}
 
 .link {
     color: #116262;

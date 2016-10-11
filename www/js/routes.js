@@ -12,7 +12,7 @@ angular.module('app.routes', [])
 
   .state('tabsController', {
     url: '/page1',
-    templateUrl: 'templates/tabsController.html',
+    templateUrl: 'app/tabsController.html',
     abstract:true
   })
 
@@ -20,7 +20,7 @@ angular.module('app.routes', [])
     url: '/page5',
     views: {
       'tab1': {
-        templateUrl: 'templates/login.html',
+        templateUrl: 'app/login.html',
         controller: 'loginCtrl'
       }
     }
@@ -30,7 +30,7 @@ angular.module('app.routes', [])
     url: '/page6',
     views: {
       'tab3': {
-        templateUrl: 'templates/signup.html',
+        templateUrl: 'app/signup.html',
         controller: 'signupCtrl'
       }
     }
@@ -38,50 +38,50 @@ angular.module('app.routes', [])
 
   .state('menu2', {
       url: '/page7',
-      templateUrl: 'templates/menu2.html',
-      controller: 'menu2Ctrl'
+      templateUrl: 'app/mainmenu.html',
+      controller: 'mainMenuCtrl'
     })
 
 
   .state('offers', {
     url: '/page8',
-    templateUrl: 'templates/offers.html',
+    templateUrl: 'app/offers.html',
     controller: 'offersCtrl'
   })
 
   .state('myCart', {
     url: '/page9',
-    templateUrl: 'templates/myCart.html',
+    templateUrl: 'app/myCart.html',
     controller: 'myCartCtrl'
   })
 
   .state('lastOrders', {
     url: '/page10',
-    templateUrl: 'templates/lastOrders.html',
+    templateUrl: 'app/lastOrders.html',
     controller: 'lastOrdersCtrl'
   })
 
   .state('favourite', {
     url: '/page11',
-    templateUrl: 'templates/favourite.html',
+    templateUrl: 'app/favourite.html',
     controller: 'favouriteCtrl'
   })
 
   .state('settings', {
     url: '/page12',
-    templateUrl: 'templates/settings.html',
+    templateUrl: 'app/settings.html',
     controller: 'settingsCtrl'
   })
 
   .state('support', {
     url: '/page13',
-    templateUrl: 'templates/support.html',
+    templateUrl: 'app/support.html',
     controller: 'supportCtrl'
   })
 
   .state('checkout', {
     url: '/page16',
-    templateUrl: 'templates/checkout.html',
+    templateUrl: 'app/checkout.html',
     controller: 'checkoutCtrl'
   })
 
@@ -89,7 +89,7 @@ angular.module('app.routes', [])
     url: '/page15',
     views: {
       'tab1': {
-        templateUrl: 'templates/forgotPassword.html',
+        templateUrl: 'app/forgotPassword.html',
         controller: 'forgotPasswordCtrl'
       }
     }

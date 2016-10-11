@@ -39,26 +39,26 @@
         .platform-ios .manual-ios-statusbar-padding {
             padding-top: 20px;
         }
-        
+
         .custom-dark {
-            color: white!important; 
-            background-color: black; 
+            color: white!important;
+            background-color: black;
         }
-        
+
         .manual-remove-top-padding {
             padding-top: 0px;
         }
-        
+
         .manual-remove-top-padding .scroll {
             padding-top: 0px !important;
         }
-        
+
         ion-list.manual-list-fullwidth div.list,
         .list.card.manual-card-fullwidth {
             margin-left: -10px;
             margin-right: -10px;
         }
-        
+
         ion-list.manual-list-fullwidth div.list > .item,
         .list.card.manual-card-fullwidth > .item {
             border-radius: 0px;
@@ -71,6 +71,19 @@
     <script src="js/routes.js"></script>
     <script src="js/services.js"></script>
     <script src="js/directives.js"></script>
+    <script src="js/Controllers/loginCtrl.module.js"></script>
+    <script src="js/Controllers/signupCtrl.module.js"></script>
+    <script src="js/Controllers/mainMenuCtrl.module.js"></script>
+    <script src="js/Controllers/offersCtrl.module.js"></script>
+    <script src="js/Controllers/indexCtrl.module.js"></script>
+    <script src="js/Controllers/myCartCtrl.module.js"></script>
+    <script src="js/Controllers/lastOrdersCtrl.module.js"></script>
+    <script src="js/Controllers/favouriteCtrl.module.js"></script>
+    <script src="js/Controllers/settingsCtrl.module.js"></script>
+    <script src="js/Controllers/supportCtrl.module.js"></script>
+    <script src="js/Controllers/forgotPasswordCtrl.module.js"></script>
+    <script src="js/Controllers/checkoutCtrl.module.js"></script>
+    <script src="js/rest-client.module.js"></script>
 </head>
 
 <body ng-app="app" animation="slide-left-right-ios7" class="platform-ios platform-cordova platform-webview">
@@ -97,16 +110,16 @@
                 <ion-header-bar class="expanded"> <img ng-src="{{&apos;img/fk/&apos;+ user_info.photoURL +&apos;.jpg&apos;}}" class="avatar motion spin fade">
                     <div class="menu-bottom"> {{user_info.displayName}} </div>
                 </ion-header-bar>
-                <ion-content class="stable-bg has-expanded-header">
+                <ion-content class="stable-bg has-expanded-header" style=" background-color:black;">
                     <ion-list data-componentid="list1" class=" " id="menu-list1">
-                        <ion-item data-componentid="list-item1" style="" menu-close="" ui-sref="menu2" id="menu-list-item1" class="item-icon-left  "> <i class="icon ion-ios-home-outline"></i>Menu</ion-item>
-                        <ion-item data-componentid="list-item2" style="" menu-close="" ui-sref="offers" id="menu-list-item2" class="item-icon-left  "> <i class="icon ion-ios-pricetag-outline"></i>Offers</ion-item>
-                        <ion-item data-componentid="list-item8" style="" menu-close="" ui-sref="myCart" id="menu-list-item8" class="item-icon-left  "> <i class="icon ion-ios-cart-outline"></i>My Cart</ion-item>
-                        <ion-item data-componentid="list-item3" style="" menu-close="" ui-sref="lastOrders" id="menu-list-item3" class="item-icon-left  "> <i class="icon ion-ios-clock-outline"></i>Orders</ion-item>
-                        <ion-item data-componentid="list-item4" style="" menu-close="" ui-sref="favourite" id="menu-list-item4" class="item-icon-left  "> <i class="icon ion-ios-star-outline"></i>Favourite</ion-item>
-                        <ion-item data-componentid="list-item5" style="" menu-close="" ui-sref="settings" id="menu-list-item5" class="item-icon-left  "> <i class="icon ion-ios-gear-outline"></i>Settings</ion-item>
-                        <ion-item data-componentid="list-item6" style="" menu-close="" ui-sref="support" id="menu-list-item6" class="item-icon-left  "> <i class="icon ion-ios-help-outline"></i>Support</ion-item>
-                        <ion-item ng-click="logout()" data-componentid="list-item7" style="" id="menu-list-item7" class="item-icon-left  "> <i class="icon ion-log-out"></i>Logout</ion-item>
+                        <ion-item data-componentid="list-item1" style="" menu-close="" ui-sref="menu2" id="menu-list-item1" class="item-icon-left  sidebar-item"> <i class="icon ion-ios-home-outline"></i>Menu</ion-item>
+                        <ion-item data-componentid="list-item2" style="" menu-close="" ui-sref="offers" id="menu-list-item2" class="item-icon-left  sidebar-item"> <i class="icon ion-ios-pricetag-outline"></i>Offers</ion-item>
+                        <ion-item data-componentid="list-item8" style="" menu-close="" ui-sref="myCart" id="menu-list-item8" class="item-icon-left  sidebar-item"> <i class="icon ion-ios-cart-outline"></i>My Cart</ion-item>
+                        <ion-item data-componentid="list-item3" style="" menu-close="" ui-sref="lastOrders" id="menu-list-item3" class="item-icon-left  sidebar-item"> <i class="icon ion-ios-clock-outline"></i>Orders</ion-item>
+                        <ion-item data-componentid="list-item4" style="" menu-close="" ui-sref="favourite" id="menu-list-item4" class="item-icon-left  sidebar-item"> <i class="icon ion-ios-star-outline"></i>Favourite</ion-item>
+                        <ion-item data-componentid="list-item5" style="" menu-close="" ui-sref="settings" id="menu-list-item5" class="item-icon-left  sidebar-item"> <i class="icon ion-ios-gear-outline"></i>Settings</ion-item>
+                        <ion-item data-componentid="list-item6" style="" menu-close="" ui-sref="support" id="menu-list-item6" class="item-icon-left  sidebar-item"> <i class="icon ion-ios-help-outline"></i>Support</ion-item>
+                        <ion-item ng-click="logout()" data-componentid="list-item7" style="" id="menu-list-item7" class="item-icon-left  sidebar-item"> <i class="icon ion-log-out"></i>Logout</ion-item>
                     </ion-list>
                 </ion-content>
             </ion-side-menu>

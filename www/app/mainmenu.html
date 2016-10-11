@@ -1,0 +1,51 @@
+<ion-view style="" class=" " id="page7" title="Main Menu" ng-init="loadMenu()">
+    <ion-content class="has-header" padding="false">
+        <div style="position: absolute; height: 400; width: 400; background-color:blue;"></div>
+
+        <div class="row" ng-repeat="item in menu" ng-if="$index % 2 === 0" style="border-top: 1px solid #999;height: 250px;">
+
+            <div class="col col-50 " ng-if="$index < menu.length" style="padding:1px;border-right:1px solid #999">
+                <div class="item item-image" style="border-width: 0px; border-style: none;">
+                    <img ng-click="showProductInfo(menu[$index].$id)" ng-src="{{item.img_url}}" width="100%" height="150px" />
+                </div>
+                <a class="item item-icon-right assertive" href="#" style="border-width: 0px; border-style: none;">
+                    <p ng-click="showProductInfo(menu[$index].$id)" style="font-size: 12px;text-align:left;"> {{item.name}}
+                        <br/>
+                        <span style="font-weight: bold;color: black;">Rs. {{item.price}} </span>
+                    </p>
+                    <!--<i style="font-size: 25px; margin-right:0px;right:0px;" ng-click="addToCart()" class="icon ion-ios-cart"></i>-->
+                </a>
+                <a>
+                    <i id="dedQty" style="font-size: 25px; margin-right:0px;left: 4%;top: -12px; position:relative" ng-click="dedQty({{item.id}})" class="icon ion-ios-minus"></i>
+
+                    <input type="tel" id="input_{{item.id}}" style="position: relative; top: -45px; width: 120px; left: 16%; background-color: rgba(0, 0, 0, 0.2); z-index: 1000;" placeholder="Quantity" />
+
+                    <i id="addQty" style="font-size: 25px; margin-right:0px;left: 85%;
+top: -73px;
+position:relative" ng-click="addQty({{item.id}})" class="icon ion-ios-plus"></i>
+                </a>
+            </div>
+
+            <div class="col col-50 " ng-if="$index+1  < menu.length" style="padding:1px;">
+                <div class="item item-image" style="border-width: 0px; border-style: none;"> <img ng-click="showProductInfo(menu[$index+1].$id)" ng-src="{{menu[$index+1].img_url}}" width="100%" height="150px"
+                    /> </div>
+                <a class="item item-icon-right assertive" href="#" style="border-width: 0px; border-style: none;">
+                    <p ng-click="showProductInfo(menu[$index+1].$id)" style="font-size: 12px;text-align:left;"> {{menu[$index+1].name}}
+                        <br/>
+                        <span style="font-weight: bold;color: black;">Rs. {{menu[$index+1].price}}</span>
+                    </p>
+                    <!--<i style="font-size: 25px;right: 0px;" ng-click="addToCart(menu[$index+1])" class="icon ion-ios-cart"></i>-->
+                </a>
+                <a>
+                    <i id="dedQty" style="font-size: 25px; margin-right:0px;left: 5%;top: -12px;
+position:relative" ng-click="dedQty({{menu[$index+1].id}})" class="icon ion-ios-minus"></i>
+                    <input type="tel" style="position: relative; top: -45px; width: 120px; left: 18%; background-color: rgba(0, 0, 0, 0.2); z-index: 1000;" placeholder="Quantity" />
+
+                    <i id="addQty" style="font-size: 25px; margin-right:0px;left: 85%;
+top: -73px;
+position:relative; z-index:1000" ng-click="addQty({{menu[$index+1].id}})"  class="icon ion-ios-plus"></i>
+                </a>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
