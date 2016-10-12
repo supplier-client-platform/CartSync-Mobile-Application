@@ -16,13 +16,19 @@
                     <!--<i style="font-size: 25px; margin-right:0px;right:0px;" ng-click="addToCart()" class="icon ion-ios-cart"></i>-->
                 </a>
                 <a>
-                    <i id="dedQty" style="font-size: 25px; margin-right:0px;left: 4%;top: -12px; position:relative" ng-click="dedQty({{item.id}})" class="icon ion-ios-minus"></i>
+                    <div class="row" style="bottom: 25px; position: relative;">
+                        <div style="position: relative;display: block;width: 10%;padding-right: 20%;">
+                            <i id="dedQty" style="font-size: 35px;" ng-click="dedQty({{item.id}})" class="icon ion-ios-minus"></i>
+                        </div>
 
-                    <input type="tel" id="input_{{item.id}}" style="position: relative; top: -45px; width: 120px; left: 16%; background-color: rgba(0, 0, 0, 0.2); z-index: 1000;" placeholder="Quantity" />
+                        <div style="display: block;position: relative; width: 60%;">
+                            <input type="tel" id="input_{{item.id}}" style="width: 100%;background-color: rgba(0, 0, 0, 0.2);" placeholder="Quantity" />
+                        </div>
 
-                    <i id="addQty" style="font-size: 25px; margin-right:0px;left: 85%;
-top: -73px;
-position:relative" ng-click="addQty({{item.id}})" class="icon ion-ios-plus"></i>
+                        <div style="width: 10%;">
+                            <i id="addQty" style="font-size: 35px; padding-left: 30%;" ng-click="addQty({{item.id}})" class="icon ion-ios-plus"></i>
+                        </div>
+                    </div>
                 </a>
             </div>
 
@@ -36,13 +42,19 @@ position:relative" ng-click="addQty({{item.id}})" class="icon ion-ios-plus"></i>
                     <!--<i style="font-size: 25px;right: 0px;" ng-click="addToCart(menu[$index+1])" class="icon ion-ios-cart"></i>-->
                 </a>
                 <a>
-                    <i id="dedQty" style="font-size: 25px; margin-right:0px;left: 5%;top: -12px;
-position:relative" ng-click="dedQty({{menu[$index+1].id}})" class="icon ion-ios-minus"></i>
-                    <input type="tel" style="position: relative; top: -45px; width: 120px; left: 18%; background-color: rgba(0, 0, 0, 0.2); z-index: 1000;" placeholder="Quantity" />
+                    <div class="row" style="bottom: 25px; position: relative;">
+                        <div style="position: relative;display: block;width: 10%;padding-right: 20%;">
+                            <i id="dedQty" style="font-size: 35px;" ng-click="dedQty({{item.id}})" class="icon ion-ios-minus"></i>
+                        </div>
 
-                    <i id="addQty" style="font-size: 25px; margin-right:0px;left: 85%;
-top: -73px;
-position:relative; z-index:1000" ng-click="addQty({{menu[$index+1].id}})" class="icon ion-ios-plus"></i>
+                        <div style="display: block;position: relative;width: 60%;">
+                            <input type="tel" id="input_{{item.id}}" style="width: 100%;background-color: rgba(0, 0, 0, 0.2);" placeholder="Quantity" />
+                        </div>
+
+                        <div style="width: 10%;">
+                            <i id="addQty" style="font-size: 35px; padding-left: 30%;" ng-click="addQty({{item.id}})" class="icon ion-ios-plus"></i>
+                        </div>
+                    </div>
                 </a>
             </div>
         </div>
