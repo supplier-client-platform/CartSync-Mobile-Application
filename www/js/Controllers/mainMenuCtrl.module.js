@@ -42,7 +42,7 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
     $scope.addToCart = function(a) {
         // console.log(JSON.stringify($scope.menu[a]));
         $rootScope.cartList.push({
-            qty: "4",
+            qty: "0",
             item: $scope.menu[a]
         });
 
