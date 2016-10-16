@@ -1,13 +1,14 @@
 /* Utilities */
+
 .app-icon {
-    background: rgba(0, 0, 0, 0) url("../img/app-icon.png") repeat scroll center center / cover ;
+    background: rgba(0, 0, 0, 0) url("../img/app-icon.png") repeat scroll center center / cover;
     border-radius: 0%;
     height: 50px;
     margin: 0 auto;
     width: 50px;
 }
 
-.sidebar-item{
+.sidebar-item {
     color: white;
 }
 
@@ -58,6 +59,8 @@ p {
     background-color: #263238 !important;
     color: #fff;
 }
+
+
 /* Menu */
 
 .menu .bar.bar-header.expanded {
@@ -71,7 +74,7 @@ p {
     font-weight: bold;
 }
 
-.item-radio input:checked ~ .item-content {
+.item-radio input:checked~.item-content {
     background: transparent;
 }
 
@@ -143,6 +146,8 @@ p {
     opacity: 1;
     z-index: 9;
 }
+
+
 /* CODE */
 
 .code {
@@ -218,83 +223,106 @@ p {
     right: 16px !important;
     top: 16px !important;
 }
-.platform-android .popover{
-margin-top:10px;
+
+.platform-android .popover {
+    margin-top: 10px;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 /*New Profile cover page*/
 
-
 .profile-nav .user-heading {
-  /*background: #387ef5;*/
-  background-image: url('../img/cover4.jpg');
-  color: #fff;
-  border-radius: 4px 4px 0 0;
-  -webkit-border-radius: 4px 4px 0 0;
-  padding: 5px;
-  text-align: center;
+    /*background: #387ef5;*/
+    background-image: url('../img/cover4.jpg');
+    color: #fff;
+    border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    padding: 5px;
+    text-align: center;
 }
 
-.profile-nav .user-heading.round a  {
-  border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border: 10px solid rgba(255,255,255,0.3);
-  display: inline-block;
+.profile-nav .user-heading.round a {
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border: 10px solid rgba(255, 255, 255, 0.3);
+    display: inline-block;
 }
 
 .profile-nav .user-heading a img {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  -webkit-border-radius: 50%;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
 }
-
 
 
 /*Footer*/
+
 #footer {
-  position : absolute;
-  bottom : 0;
-  height : 40px;
-  margin-top : 40px;
+    position: absolute;
+    bottom: 0;
+    height: 40px;
+    margin-top: 40px;
 }
-
-
 
 
 /* Support Cover*/
+
 .support-nav .user-heading {
-  /*background: #387ef5;*/
-  background-image: url('../img/material-graphite.jpg');
-  color: #fff;
-  border-radius: 4px 4px 0 0;
-  -webkit-border-radius: 4px 4px 0 0;
-  padding: 5px;
-  text-align: center;
+    /*background: #387ef5;*/
+    background-image: url('../img/material-graphite.jpg');
+    color: #fff;
+    border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    padding: 5px;
+    text-align: center;
 }
 
-.support-nav .user-heading.round a  {
-  border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border: 10px solid rgba(255,255,255,0.3);
-  display: inline-block;
+.support-nav .user-heading.round a {
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border: 10px solid rgba(255, 255, 255, 0.3);
+    display: inline-block;
 }
 
 .support-nav .user-heading a img {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  -webkit-border-radius: 50%;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+}
+
+img.add-to-cart {
+    height: 90px;
+    position: absolute;
+}
+
+div.add-to-cart {
+    position: relative;
+    height: 50px;
+    bottom: 30px;
+    padding: 0px;
+    margin-left: 35%;
+    right: -1%;
+}
+
+div.add-to-cart-right {
+    position: relative;
+    height: 50px;
+    bottom: 30px;
+    padding: 0px;
+    margin-left: 35%;
+    right: -7%;
+}
+
+div.item-price {
+    position: relative;
+    right: 35%;
+    margin-left: 1%;
+}
+
+div.item-price-right {
+    position: relative;
+    right: 35%;
+    margin-left: 1%;
 }

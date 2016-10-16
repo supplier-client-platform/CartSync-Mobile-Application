@@ -33,40 +33,23 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
 
     $scope.loadMenu = function() {
         $scope.onlyNumbers = /^\d+$/;
-
-        // sharedUtils.showLoading();
-        // $scope.menu = $firebaseArray(fireBaseData.refMenu());
-        // $scope.menu.$loaded().then(function (items) {
-        //     $scope.menu = items;
-        //     console.log('=========>' + JSON.stringify(items)); // populated array
-        // });
-        // sharedUtils.hideLoading();
-
         $restClient.getProducts(function(msg) {
             console.log(JSON.stringify(msg));
             $scope.menu = msg.products;
         });
     }
 
-    $scope.dedQty = function(a) {
-        console.log(a);
-    };
+    $scope.addToCart = function(a) {
+        // console.log(JSON.stringify($scope.menu[a]));
+        $rootScope.cartList.push({
+            qty: "4",
+            item: $scope.menu[a]
+        });
 
-    $scope.addQty = function(a) {
-        var x = parseInt(a);
-        document.getElementById("input_" + a).value = x++;
-
-        console.log(a);
-    };
-
-    $scope.addItem = function() {
-        alert("a: ");
-    };
+        console.log(JSON.stringify($rootScope.cartList));
+    }
 
     $scope.showProductInfo = function(id) {};
-    $scope.addToCart = function(item) {
-        sharedCartService.add(item);
-    };
 
     $scope.getUserDetails = function() {
         $restClient.getUserDetails(function(msg) {

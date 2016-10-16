@@ -14,7 +14,7 @@ angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 
         $ionicConfigProvider.tabs.position('bottom'); // other values: top
     })
     .run(function($ionicPlatform, $rootScope) {
-
+        $rootScope.cartList = [];
         $rootScope.extras = false;
 
         $ionicPlatform.ready(function() {
