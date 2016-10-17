@@ -3,7 +3,7 @@
 
         <div>
             <p>Total =
-                <strong> Rs. {{calculateTotal()}}</strong>
+                <strong> Rs. {{calculateTotal() | number:2}}</strong>
             </p>
         </div>
         <button ng-click="checkout()" class="button button-assertive button-block ">Check Out</button>

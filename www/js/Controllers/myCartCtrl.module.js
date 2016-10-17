@@ -33,9 +33,7 @@ angular.module('app.myCartController', [])
     };
 
     $scope.checkout = function() {
-        $restClient.makeOrder(555, function(msg) {
-            console.log(JSON.stringify(msg));
-        });
+        $state.go('checkout');
     };
 
     $scope.increase = function(a) {
