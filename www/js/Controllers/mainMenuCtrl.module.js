@@ -59,6 +59,7 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
                 item: $scope.menu[a]
             });
             console.log(JSON.stringify($rootScope.cartList));
+
         }
     }
 
