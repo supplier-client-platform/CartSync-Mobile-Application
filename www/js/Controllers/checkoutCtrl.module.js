@@ -1,7 +1,7 @@
 angular.module('app.CheckoutController', [])
 
 .controller('checkoutCtrl', function($scope,$rootScope,sharedUtils,$state,$firebaseArray,
-                                     $ionicHistory,fireBaseData, $ionicPopup, $restClient, sharedCartService) {
+                                     $ionicHistory,fireBaseData, $ionicPopup, $restClient, sharedCartService, $firebase, $firebaseObject) {
 
     $rootScope.extras=true;
 
@@ -20,51 +20,15 @@ angular.module('app.CheckoutController', [])
     ];
 
     $scope.pay=function(address,payment){
+      var user = firebase.auth().currentUser;
 
-      // if(address==null || payment==null){
-      //   //Check if the checkboxes are selected ?
-      //   sharedUtils.showAlert("Error","Please choose from the Address and Payment Modes.")
-      // }
-      // else {
-        // Loop throw all the cart item
-      //   for (var i = 0; i < sharedCartService.cart_items.length; i++) {
-      //     //Add cart item to order table
-      //     fireBaseData.refOrder().push({
 
-      //       //Product data is hardcoded for simplicity
-      //       product_name: sharedCartService.cart_items[i].item_name,
-      //       product_price: sharedCartService.cart_items[i].item_price,
-      //       product_image: sharedCartService.cart_items[i].item_image,
-      //       product_id: sharedCartService.cart_items[i].$id,
+      alert(user.displayName);
+      //alert(user.displayName + "\n" + user.email + "\n" + user.uid);
 
-      //       //item data
-      //       item_qty: sharedCartService.cart_items[i].item_qty,
-
-      //       //Order data
-      //       user_id: $scope.user_info.uid,
-      //       user_name:$scope.user_info.displayName,
-      //       address_id: address,
-      //       payment_id: payment,
-      //       status: "Queued"
-      //     });
-
-      //   }
-
-      //   //Remove users cart
-      //   fireBaseData.refCart().child($scope.user_info.uid).remove();
-
-      //   sharedUtils.showAlert("Info", "Order Successfull");
-
-      //   // Go to past order page
-      //   $ionicHistory.nextViewOptions({
-      //     historyRoot: true
-      //   });
-      //   $state.go('lastOrders', {}, {location: "replace", reload: true});
-      // }
-      $restClient.makeOrder(5,function(res){
-          console.log(JSON.stringify(res));
-      });
-    // }
+      // $restClient.makeOrder(5,function(res){
+      //     console.log(JSON.stringify(res));
+      // });
   };
 
 

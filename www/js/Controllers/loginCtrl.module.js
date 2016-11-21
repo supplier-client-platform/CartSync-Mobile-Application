@@ -12,9 +12,6 @@ angular.module('app.loginController', [])
         }
     });
 
-
-
-
     //Check if user already logged in
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
@@ -27,6 +24,16 @@ angular.module('app.loginController', [])
             sharedUtils.hideLoading();
             $state.go('menu2', {}, { location: "replace" });
 
+        }else{
+            $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
+            $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
+
+            $ionicHistory.nextViewOptions({
+              historyRoot: true
+            });
+            $rootScope.extras = false;
+            sharedUtils.hideLoading();
+            $state.go('tabsController.login', {}, {location: "replace"});
         }
     });
 

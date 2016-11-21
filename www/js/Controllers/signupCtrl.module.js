@@ -3,6 +3,31 @@ angular.module('app.signupController', [])
 .controller('signupCtrl', function($scope, $rootScope, sharedUtils, $ionicSideMenuDelegate,
     $state, fireBaseData, $ionicHistory) {
 
+    //Check if user already logged in
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+
+            $ionicHistory.nextViewOptions({
+                historyRoot: true
+            });
+            $ionicSideMenuDelegate.canDragContent(true); // Sets up the sideMenu dragable
+            $rootScope.extras = true;
+            sharedUtils.hideLoading();
+            $state.go('menu2', {}, { location: "replace" });
+
+        }else{
+            $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
+            $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
+
+            $ionicHistory.nextViewOptions({
+              historyRoot: true
+            });
+            $rootScope.extras = false;
+            sharedUtils.hideLoading();
+            $state.go('tabsController.login', {}, {location: "replace"});
+        }
+    });
+
     $rootScope.extras = false; // For hiding the side bar and nav icon
 
     $scope.signupEmail = function(formName, cred) {

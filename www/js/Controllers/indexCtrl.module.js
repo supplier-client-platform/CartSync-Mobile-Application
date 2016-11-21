@@ -1,11 +1,13 @@
 angular.module('app.indexController', [])
 
 .controller('indexCtrl', function($scope,$rootScope,sharedUtils,$ionicHistory,$state,$ionicSideMenuDelegate,sharedCartService) {
-
+    StatusBar.overlaysWebView(false);
+    StatusBar.styleLightContent();
     //Check if user already logged in
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         $scope.user_info=user; //Saves data to user_info
+        //alert($scope.user_info.displayName);
 
         //Only when the user is logged in, the cart qty is shown
         //Else it will show unwanted console error till we get the user object
