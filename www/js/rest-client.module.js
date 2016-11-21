@@ -12,8 +12,6 @@ angular.module('rest-client', []).
             , 'Content-Type': 'application/x-www-form-urlencoded'
         };
         $httpProvider.defaults.headers.put = $httpProvider.defaults.headers.post;
-        // $httpProvider.defaults.useXDomain = true;
-        //       delete $httpProvider.defaults.headers.common['X-Requested-With'];
     }]).
     factory('$restClient', ['$rootScope', '$http', function ($rootScope, $http) {
         return {
@@ -55,11 +53,33 @@ angular.module('rest-client', []).
                 });
             },
             makeOrder: function (data, callBack) {
+                var shoppingList = [{ 
+                            productID: 1, 
+                            productName : "Coke",
+                            productBrand : "Coca-Cola",
+                            productquantity: 3,
+                            totalprice : 500 
+                        }, { 
+                            productID: 3, 
+                            productName : "Fanta",
+                            productBrand : "Coca-Cola",
+                            productquantity: 6,
+                            totalprice : 700
+                        }];
+
                 $http({
                     method: 'POST'
-                    , url: 'http://api.sa-hack.reactive-solutions.xyz/api/v1/order/new'
-                    , params: { "customer_id": 650, "total_price": 650, "status": "pending", "items": [{ "product_id": "1", "quantity": 3 }, { "product_id": "3", "quantity": 5 }] }
+                    , url: 'http://dev.sc-platform.api.reactive-solutions.xyz/api/v1/order/create/new'
+                    , params: { 
+                        customer_id: 6650, 
+                        gross_total: 650,
+                        discount : 0,
+                        net_total : 1000,
+                        supplier_id : 2, 
+                        shopping_list: shoppingList
+                    }
                 }).success(function (msg) {
+                    console.log("Create order res: " + JSON.stringify(msg));
                     callBack(msg);
                 }).error(function (err) {
                     console.log(err);

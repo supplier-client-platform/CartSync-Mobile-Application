@@ -1,9 +1,9 @@
 angular.module('app.myCartController', [])
 
-.controller('myCartCtrl', function($scope, $rootScope, $state, $ionicPopup, sharedCartService, $restClient) {
+.controller('myCartCtrl', function($scope, $rootScope, $state, $ionicPopup, sharedCartService, $restClient, $ionicHistory) {
 
     $scope.initCart = function() {
-
+        //$ionicHistory.clearHistory();
     }
 
     $scope.calculateTotal = function() {

@@ -293,17 +293,10 @@ p {
 }
 
 img.add-to-cart {
-    height: 90px;
+    z-index: 9;
+    width: 50%;
+    height: 30%;
     position: absolute;
-}
-
-div.add-to-cart {
-    position: relative;
-    height: 50px;
-    bottom: 30px;
-    padding: 0px;
-    margin-left: 35%;
-    right: -1%;
 }
 
 div.add-to-cart-right {
