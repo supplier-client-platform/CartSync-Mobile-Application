@@ -35,8 +35,9 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
         $scope.onlyNumbers = /^\d+$/;
         $restClient.getProducts(function(msg) {
             console.log(JSON.stringify(msg));
-            $scope.menu = msg.products;
+            $scope.menu = msg.data;
         });
+        alert(JSON.stringify($scope.user_info));
     };
 
     $scope.isAdded = function(a) {

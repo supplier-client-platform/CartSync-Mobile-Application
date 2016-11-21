@@ -13,7 +13,7 @@
 
                 <div class="row">
                     <div class="add-to-cart" ng-click="addToCart($index)">
-                        <img class="add-to-cart" ng-src="{{isAdded($index) ? '../img/addedtocart.png' : '../img/addtocart.png'}}" />
+                        <img class="add-to-cart" ng-src="{{isAdded($index) ? '/img/addedtocart.png' : '/img/addtocart.png'}}" />
                     </div>
                     <div class="item-price">
                         <p ng-click="showProductInfo(menu[$index].$id)" style="font-size: 15px;text-align:left;padding-top: 10%;">
@@ -33,7 +33,7 @@
 
                 <div class="row">
                     <div class="add-to-cart-right" ng-click="addToCart($index+1)">
-                        <img class="add-to-cart" ng-src="{{isAdded($index+1) ? '../img/addedtocart.png' : '../img/addtocart.png'}}" />
+                        <img class="add-to-cart" ng-src="{{isAdded($index+1) ? '/img/addedtocart.png' : '/img/addtocart.png'}}" />
                     </div>
                     <div class="item-price">
                         <p ng-click="showProductInfo(menu[$index+1].$id)" style="font-size: 15px;text-align:left;padding-top: 5%;">

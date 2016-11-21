@@ -44,8 +44,10 @@ angular.module('rest-client', []).
             getProducts: function (callBack) {
                 $http({
                     method: 'GET'
-                    , url: 'http://api.sa-hack.reactive-solutions.xyz/api/v1/product/all'
+                    , url: 'http://dev.sc-platform.api.reactive-solutions.xyz/api/v1/product/all'
+                    , params: { marketPlaceId : 1 }
                 }).success(function (msg) {
+                    //console.log("All Products: " + JSON.stringify(msg.data));
                     callBack(msg);
                 }).error(function (err) {
                     console.log(err);
