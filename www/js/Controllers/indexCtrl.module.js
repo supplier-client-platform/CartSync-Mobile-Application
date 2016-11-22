@@ -1,25 +1,28 @@
 angular.module('app.indexController', [])
 
-.controller('indexCtrl', function($scope,$rootScope,sharedUtils,$ionicHistory,$state,$ionicSideMenuDelegate,sharedCartService) {
-    StatusBar.overlaysWebView(false);
-    StatusBar.styleLightContent();
+  .controller('indexCtrl', function ($scope, $rootScope, sharedUtils, $ionicHistory, $state, $ionicSideMenuDelegate, sharedCartService) {
+
+    if (window.StatusBar) {
+      StatusBar.overlaysWebView(false);
+      StatusBar.styleLightContent();
+    }
     //Check if user already logged in
-    firebase.auth().onAuthStateChanged(function(user) {
+    firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
-        $scope.user_info=user; //Saves data to user_info
+        $scope.user_info = user; //Saves data to user_info
         //alert($scope.user_info.displayName);
 
         //Only when the user is logged in, the cart qty is shown
         //Else it will show unwanted console error till we get the user object
-        $scope.get_total= function() {
-          var total_qty=0;
+        $scope.get_total = function () {
+          var total_qty = 0;
           for (var i = 0; i < sharedCartService.cart_items.length; i++) {
             total_qty += sharedCartService.cart_items[i].item_qty;
           }
           return total_qty;
         };
 
-      }else {
+      } else {
 
         $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
         $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
@@ -29,17 +32,17 @@ angular.module('app.indexController', [])
         });
         $rootScope.extras = false;
         sharedUtils.hideLoading();
-        $state.go('tabsController.login', {}, {location: "replace"});
+        $state.go('tabsController.login', {}, { location: "replace" });
 
       }
     });
 
-    $scope.logout=function(){
+    $scope.logout = function () {
 
       sharedUtils.showLoading();
 
       // Main Firebase logout
-      firebase.auth().signOut().then(function() {
+      firebase.auth().signOut().then(function () {
 
 
         $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
@@ -52,10 +55,10 @@ angular.module('app.indexController', [])
 
         $rootScope.extras = false;
         sharedUtils.hideLoading();
-        $state.go('tabsController.login', {}, {location: "replace"});
+        $state.go('tabsController.login', {}, { location: "replace" });
 
-      }, function(error) {
-         sharedUtils.showAlert("Error","Logout Failed")
+      }, function (error) {
+        sharedUtils.showAlert("Error", "Logout Failed")
       });
 
     }

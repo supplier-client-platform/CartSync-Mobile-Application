@@ -1,10 +1,45 @@
 <ion-view style="" class=" " id="page7" title="Main Menu" ng-init="loadMenu()">
-    <ion-content class="has-header" padding="false">
-        <div style="position: absolute; height: 400; width: 400; background-color:blue;"></div>
+    <ion-content class="has-header" padding="false" style="background-color: #ECEFF1;">
 
-        <div class="row" ng-repeat="item in menu" ng-if="$index % 2 === 0" style="border-top: 1px solid #999;height: 240px;">
+        <div class="item item-input-inset" style="border: none;background-color:rgba(255,255,255,0.9)">
+            <label class="item-input-wrapper" style="background-color:#ECEFF1">
+      <input type="text" placeholder="Search Items">
+    </label>
 
-            <div class="col col-50 " ng-if="$index < menu.length" style="padding:1px;border-right:1px solid #999" ng-click="addToCart($index)">
+        </div>
+
+        <div class="row flex-wrap" style="flex-wrap:wrap">
+            <div class="col-50" ng-repeat="item in menu" style="padding:0.35rem;">
+                <div style="background-color:#FFF">
+
+                    <div class="item item-image" style="border-width: 0px; border-style: none;height:13rem;padding:1rem;padding-bottom:0rem">
+                        <div style="height:7rem; display: flex; align-items: center; justify-content: center;">
+                            <img ng-click="showProductInfo(item.id)" ng-src="{{item.img_url}}" width="100%" height="auto" />
+                        </div>
+                        <div style="padding-top:1rem">
+                            <div style="height:2.5rem">
+                                <h4 ng-click="showProductInfo(item.id)" style="text-align:left;white-space: normal;color:#78909C"> {{item.name | uppercase}}</h4>
+                            </div>
+                            <h4 style="text-align:left;color:#78909C">
+                                RS. <small> {{item.price | number:2}} </small>
+                            </h4>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-50" style="padding-right:0.5rem">
+                            <button class="button button-small  button-block" ng-class="$index==1?'button-assertive':''" style="box-shadow: none;margin:0cm;padding-right:0cm;padding-left:0cm;padding:0cm"> <i class="ion-heart"></i></button>
+                        </div>
+                        <div class="col-50" style="padding-right:0.5rem">
+                            <button class="button button-small button-block"  ng-click="addToCart($index);" ng-class="item.isAdded?'button-positive':''" style="    box-shadow: none;margin:0cm;padding:0cm"> <i class="ion-ios-cart"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--<div class="col col-50 " ng-if="$index < menu.length" style="padding:1px;border-right:1px solid #999" ng-click="addToCart($index)">
 
                 <img class="add-to-cart" ng-src="img/check.png" ng-show="item.isAdded"/>
                 <div class="item item-image" style="border-width: 0px; border-style: none;">
@@ -26,7 +61,7 @@
                             <span style="font-weight: bold;color: black;"> Rs. {{menu[$index+1].price| number:2}}</span>
                     </p>
                 </div>
-            </div>
+            </div>-->
         </div>
     </ion-content>
 </ion-view>

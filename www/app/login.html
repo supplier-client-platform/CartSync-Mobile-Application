@@ -1,28 +1,63 @@
+<style>
+    .logo-font{
+        font-family: "Comic Sans MS", cursive, sans-serif;
+    }
+</style>
+
+
 <ion-view style="" class=" " id="page5" title="Login" hide-nav-bar="true">
     <img src="img/bg1.jpg" style=" height: 100%; width: 100%;">
+
     <ion-content>
-		<form name="loginForm" class="list " id="login-form1">
-            <ion-list class=" " id="login-list2">
 
-                <div class="app-icon"></div>
 
-                <label class="item item-input item-floating-label">
+        <form name="loginForm" class="list " style="padding:1rem" id="login-form1">
+            <div class="app-icon">
+            </div>
+            <h3 class="logo-font" style="color:rgba(255,255,255,0.68);margin-top:0.5rem">
+                <center>On The Go</center>
+            </h3>
+
+            <div style="    background-color:rgba(255,255,255,0.18);  margin-top: 2rem;  border-radius: 7%; padding: 6%;padding-top:0cm">
+
+                <ion-list class=" " id="login-list2">
+
+
+
+                    <div style="padding:1rem">
+                        <label style="padding-left:0cm" class="item item-input item-floating-label">
                     <span class="input-label" style="color: #9F9F9F;">Email</span>
                     <input ng-model="user.email" style="color: white;" type="email" placeholder="Email">
                 </label>
-                <label class="item item-input item-floating-label">
+                        <label style="padding-left:0cm" class="item item-input item-floating-label">
                     <span class="input-label" style="color: #9F9F9F;" >Password</span>
                     <input ng-model="user.password" style="color: white;" type="password" placeholder="Password">
                 </label>
+                    </div>
 
-            </ion-list>
+                </ion-list> 
+                <div class="row">
+                    <div class="col-50" style="padding:1%">
+                        <button ng-click="loginFb('facebook')" style="font-size:80%;padding-right: 1rem;padding-left:1rem" class="  button button-positive button-small button-block icon-left ion-social-facebook "
+                            id="signup-button4">Facebook</button>
 
-            <div style="height: 40px;" class="spacer"></div>
-            <button ng-click="loginEmail(loginForm,user)" class=" button button-assertive  button-block  icon-left ion-ios-email-outline "  id="signup-button3">LOGIN WITH EMAIL</button>
-            <button ng-click="loginFb('facebook')" class=" button button-positive  button-block icon-left ion-social-facebook "  id="signup-button4">LOGIN WITH FACEBOOK</button>
+                    </div>
+                    <div class="col-50" style="padding:1%">
+
+                        <button ng-click="loginEmail(loginForm,user)" style="font-size:80%" class="  button button-success button-small  button-block  icon-left ion-avatar "
+                            id="signup-button3">LOGIN</button>
+                    </div>
+
+                </div>
+
+
+
+                <a style="padding-left: 1rem; margin: 0cm;" class=" button button-stable  button-block button-clear icon-left ion-ios-arrow-right "
+                    style="padding-left:0cm" id="login-button5" ui-sref="tabsController.forgotPassword">FORGOT PASSWORD</a>
+
+            </div>
         </form>
 
-		<a class=" button button-stable  button-block button-clear icon-left ion-ios-email-outline " id="login-button5" ui-sref="tabsController.forgotPassword">FORGOT PASSWORD</a>
 
-	</ion-content>
+    </ion-content>
 </ion-view>

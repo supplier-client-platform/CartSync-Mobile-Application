@@ -1,52 +1,55 @@
 angular.module('app.loginController', [])
 
-.controller('loginCtrl', function($scope, $rootScope, $ionicHistory, sharedUtils, $state, $ionicSideMenuDelegate) {
-    $rootScope.extras = false; // For hiding the side bar and nav icon
+    .controller('loginCtrl', function ($scope, $rootScope, $ionicHistory, sharedUtils, $state, $ionicSideMenuDelegate) {
+        $rootScope.extras = false; // For hiding the side bar and nav icon
 
-    // When the user logs out and reaches login page,
-    // we clear all the history and cache to prevent back link
-    $scope.$on('$ionicView.enter', function(ev) {
-        if (ev.targetScope !== $scope) {
-            $ionicHistory.clearHistory();
-            $ionicHistory.clearCache();
-        }
-    });
+        // When the user logs out and reaches login page,
+        // we clear all the history and cache to prevent back link
+        $scope.$on('$ionicView.enter', function (ev) {
+            if (ev.targetScope !== $scope) {
+                $ionicHistory.clearHistory();
+                $ionicHistory.clearCache();
+            }
+        });
 
-    //Check if user already logged in
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
+        //Check if user already logged in
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
 
-            $ionicHistory.nextViewOptions({
-                historyRoot: true
-            });
-            $ionicSideMenuDelegate.canDragContent(true); // Sets up the sideMenu dragable
-            $rootScope.extras = true;
-            sharedUtils.hideLoading();
-            $state.go('menu2', {}, { location: "replace" });
+                $ionicHistory.nextViewOptions({
+                    historyRoot: true
+                });
+                $ionicSideMenuDelegate.canDragContent(true); // Sets up the sideMenu dragable
+                $rootScope.extras = true;
+                sharedUtils.hideLoading();
+                $state.go('menu2', {}, { location: "replace" });
 
-        }else{
-            $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
-            $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
+            } else {
+                $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
+                $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
 
-            $ionicHistory.nextViewOptions({
-              historyRoot: true
-            });
-            $rootScope.extras = false;
-            sharedUtils.hideLoading();
-            $state.go('tabsController.login', {}, {location: "replace"});
-        }
-    });
-
-
-    $scope.loginEmail = function(formName, cred) {
+                $ionicHistory.nextViewOptions({
+                    historyRoot: true
+                });
+                $rootScope.extras = false;
+                sharedUtils.hideLoading();
+                $state.go('tabsController.login', {}, { location: "replace" });
+            }
+        });
 
 
-        if (formName.$valid) { // Check if the form data is valid or not
+        $scope.loginEmail = function (formName, cred) {
 
-            sharedUtils.showLoading();
 
-            //Email
-            firebase.auth().signInWithEmailAndPassword(cred.email, cred.password).then(function(result) {
+            if (formName.$valid) { // Check if the form data is valid or not
+
+                sharedUtils.showLoading();
+
+                // handle undefined error
+                cred = cred ? cred : {};
+
+                //Email
+                firebase.auth().signInWithEmailAndPassword(cred.email, cred.password).then(function (result) {
 
                     // You dont need to save the users session as firebase handles it
                     // You only need to :
@@ -63,28 +66,28 @@ angular.module('app.loginController', [])
                     $state.go('menu2', {}, { location: "replace" });
 
                 },
-                function(error) {
-                    sharedUtils.hideLoading();
-                    sharedUtils.showAlert("Please note", "Authentication Error");
-                }
-            );
+                    function (error) {
+                        sharedUtils.hideLoading();
+                        sharedUtils.showAlert("Please note", "Authentication Error");
+                    }
+                );
 
-        } else {
-            sharedUtils.showAlert("Please note", "Entered data is not valid");
-        }
-
-
-
-    };
+            } else {
+                sharedUtils.showAlert("Please note", "Entered data is not valid");
+            }
 
 
-    $scope.loginFb = function() {
-        //Facebook Login
-    };
 
-    $scope.loginGmail = function() {
-        //Gmail Login
-    };
+        };
 
 
-})
+        $scope.loginFb = function () {
+            //Facebook Login
+        };
+
+        $scope.loginGmail = function () {
+            //Gmail Login
+        };
+
+
+    })

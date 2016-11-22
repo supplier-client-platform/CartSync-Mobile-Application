@@ -25,8 +25,10 @@ angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 
                 cordova.plugins.Keyboard.disableScroll(true);
             }
             if (window.StatusBar) {
+                console.log("came here");
                 // org.apache.cordova.statusbar required
-                StatusBar.styleDefault();
+                //StatusBar.styleDefault();
+                StatusBar.backgroundColorByHexString("#25263a");
             }
         });
     })
