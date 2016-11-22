@@ -43,8 +43,8 @@
                     <a class="item item item-avatar" href="" style="background-color: #FFF;border-bottom:4px solid #ECEFF1; " ng-repeat="item in cartList">
 
                         <img ng-src="{{ item.item.img_url }}">
-                        <h2>{{ item.item.name }} x {{ item.qty }}</h2>
-                        <p>Rs.{{ item.item.price | number:2 }}</p>
+                        <h2>{{ item.item.name }} </h2>
+                        <p>Rs.{{ item.item.price | number:2 }} x {{ item.qty }}</p>
                     </a>
                 </ion-scroll>
 

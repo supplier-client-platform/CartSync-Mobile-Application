@@ -2,6 +2,7 @@ angular.module('app.myCartController', [])
 
 .controller('myCartCtrl', function($scope, $rootScope, $state, $ionicPopup, sharedCartService, $restClient, $ionicHistory) {
 
+    $rootScope.$secondaryBtn = 'Checkout';
     $scope.initCart = function() {
         //$ionicHistory.clearHistory();
     }

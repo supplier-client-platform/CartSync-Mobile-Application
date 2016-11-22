@@ -2,6 +2,7 @@ angular.module('app.indexController', [])
 
   .controller('indexCtrl', function ($scope, $rootScope, sharedUtils, $ionicHistory, $state, $ionicSideMenuDelegate, sharedCartService) {
 
+    $rootScope.$secondaryBtn = 'Cart';
     if (window.StatusBar) {
       StatusBar.overlaysWebView(false);
       StatusBar.styleLightContent();

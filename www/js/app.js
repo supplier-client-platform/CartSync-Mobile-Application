@@ -7,17 +7,22 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'firebase', 'app.loginController', 'app.signupController', 'app.mainMenucontroller', 'app.offersController', 'app.indexController', 'app.myCartController', 'app.lastOrdersController', 'app.favouriteController', 'app.settingsController', 'app.supportController', 'app.forgotPasswordController', 'app.CheckoutController'])
 
-.config(function($ionicConfigProvider) {
+    .config(function ($ionicConfigProvider) {
         //Added config
         //$ionicConfigProvider.views.maxCache(5);
         $ionicConfigProvider.scrolling.jsScrolling(false);
         $ionicConfigProvider.tabs.position('bottom'); // other values: top
+
+        $ionicConfigProvider.backButton.text('').icon('ion-arrow-left-c').previousTitleText(false);
+        $ionicConfigProvider.navBar.alignTitle('center');
     })
-    .run(function($ionicPlatform, $rootScope) {
+    .run(function ($ionicPlatform, $rootScope) {
         $rootScope.cartList = [];
         $rootScope.extras = false;
 
-        $ionicPlatform.ready(function() {
+        $rootScope.$secondaryBtn = 'Cart';
+
+        $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
             if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -29,6 +34,8 @@ angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 
                 // org.apache.cordova.statusbar required
                 //StatusBar.styleDefault();
                 StatusBar.backgroundColorByHexString("#25263a");
+                ionic.Platform.fullScreen(true, true);
             }
         });
+
     })
