@@ -16,11 +16,44 @@ angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 
         $ionicConfigProvider.backButton.text('').icon('ion-arrow-left-c').previousTitleText(false);
         $ionicConfigProvider.navBar.alignTitle('center');
     })
-    .run(function ($ionicPlatform, $rootScope) {
+    .run(function ($ionicPlatform, $rootScope, $state) {
         $rootScope.cartList = [];
         $rootScope.extras = false;
 
         $rootScope.$secondaryBtn = 'Cart';
+        $rootScope.$navigate = function () {
+            switch ($rootScope.$secondaryBtn) {
+                case "Cart":
+                    $state.go("myCart");
+                    return;
+                case "Checkout":
+                    $state.go('checkout');
+                    return;
+                default:
+                    return;
+            }
+        };
+
+        $rootScope.$getClass = function (item) {
+            switch (item) {
+                case "Cart":
+                    return "ion-android-cart";
+                case "Checkout":
+                    return "icon ion-arrow-right-c";
+                default:
+                    return "";
+            }
+        };
+
+        $rootScope.$getText = function (item) {
+            switch (item) {
+                case "Cart":
+                    return $rootScope.cartList.length;
+                default:
+                    return "";
+            }
+        };
+        
 
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -35,6 +68,13 @@ angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 
                 //StatusBar.styleDefault();
                 StatusBar.backgroundColorByHexString("#25263a");
                 ionic.Platform.fullScreen(true, true);
+            }
+        });
+
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+
+            if (toState.name === "menu2") {
+                $rootScope.$secondaryBtn = 'Cart';
             }
         });
 

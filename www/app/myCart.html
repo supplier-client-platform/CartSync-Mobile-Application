@@ -1,4 +1,7 @@
 <ion-view style="" class=" " id="page9" title="My Cart" ng-init="initCart()">
+    <ion-nav-buttons  side="right">
+        <button ng-if="cartList.length !== 0" ng-click="$navigate()" class="button button-icon button-clear" ng-class="'icon ion-arrow-right-c'">   </button>
+    </ion-nav-buttons>
     <ion-content class="has-header" padding="false" style="background-color: #ECEFF1;">
 
 
@@ -33,8 +36,10 @@
         </a>-->
 
         <div ng-if="cartList.length == 0" style="padding-top:6rem;">
-            <img src="img/empty-cart.png"  alt="" style="height:8rem;padding-left:6rem"> <br>
-            <h3> <center>Sorry! Cart is Empty! </center></h3>
+            <img src="img/empty-cart.png" alt="" style="height:8rem;padding-left:6rem"> <br>
+            <h3>
+                <center>Sorry! Cart is Empty! </center>
+            </h3>
         </div>
         <div ng-if="cartList.length !== 0">
             <div class="list" style="margin-bottom:0cm">

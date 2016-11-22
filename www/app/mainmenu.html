@@ -1,4 +1,7 @@
 <ion-view style="" class=" " id="page7" title="Main Menu" ng-init="loadMenu()">
+    <ion-nav-buttons side="right">
+       <button ng-click="$navigate()" class="button button-icon button-clear" ng-class="'ion-android-cart'"> <span ng-if="cartList.length > 0" class="badge badge-assertive header-badge">{{cartList.length}}</span>  </button>
+        </ion-nav-buttons>
     <ion-content class="has-header" padding="false" style="background-color: #ECEFF1;">
 
         <div class="item item-input-inset" style="border: none;background-color:rgba(255,255,255,0.9)">
@@ -32,7 +35,8 @@
                             <button class="button button-small  button-block" ng-class="$index==1?'button-assertive':''" style="box-shadow: none;margin:0cm;padding-right:0cm;padding-left:0cm;padding:0cm"> <i class="ion-heart"></i></button>
                         </div>
                         <div class="col-50" style="padding-right:0.5rem">
-                            <button class="button button-small button-block"  ng-click="addToCart($index);" ng-class="item.isAdded?'button-positive':''" style="    box-shadow: none;margin:0cm;padding:0cm"> <i class="ion-ios-cart"></i></button>
+                            <button class="button button-small button-block" ng-click="addToCart($index);" ng-class="item.isAdded?'button-positive':''"
+                                style="    box-shadow: none;margin:0cm;padding:0cm"> <i class="ion-ios-cart"></i></button>
                         </div>
                     </div>
                 </div>
