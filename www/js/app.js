@@ -16,7 +16,7 @@ angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 
         $ionicConfigProvider.backButton.text('').icon('ion-arrow-left-c').previousTitleText(false);
         $ionicConfigProvider.navBar.alignTitle('center');
     })
-    .run(function ($ionicPlatform, $rootScope, $state, $dbService) {
+    .run(function ($ionicPlatform, $rootScope, $state, $dbService, $ionicHistory, $ionicSideMenuDelegate, sharedUtils) {
         $rootScope.cartList = [];
         $rootScope.extras = false;
 
@@ -65,6 +65,27 @@ angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 
               // $rootScope.db.getUserData().then(function(res){
               //   console.log("Lol data retrieved!!" + JSON.stringify(res));
               // });
+              $rootScope.db.getUserData().then(function(res){
+                if (parseInt(res.rows.item(0)) !== undefined) {
+                    $ionicHistory.nextViewOptions({
+                        historyRoot: true
+                    });
+                    $ionicSideMenuDelegate.canDragContent(true); // Sets up the sideMenu dragable
+                    $rootScope.extras = true;
+                    sharedUtils.hideLoading();
+                    $state.go('menu2', {}, { location: "replace" });
+                } else {
+                    $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
+                    $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
+
+                    $ionicHistory.nextViewOptions({
+                        historyRoot: true
+                    });
+                    $rootScope.extras = false;
+                    sharedUtils.hideLoading();
+                    $state.go('tabsController.login', {}, { location: "replace" });
+                }
+              });
             });
 
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

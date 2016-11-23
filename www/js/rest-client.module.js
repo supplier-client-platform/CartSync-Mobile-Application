@@ -39,6 +39,18 @@ angular.module('rest-client', []).
                     callBack('error');
                 });
             },
+            getAllBusiness: function (callBack) {
+                $http({
+                    method: 'GET'
+                    , url: 'http://dev.sc-platform.api.reactive-solutions.xyz/api/v1/business/all'
+                }).success(function (msg) {
+                    //console.log("All Products: " + JSON.stringify(msg.data));
+                    callBack(msg.data);
+                }).error(function (err) {
+                    console.log(err);
+                    callBack('error');
+                });
+            },
             getProducts: function (callBack) {
                 $http({
                     method: 'GET'
