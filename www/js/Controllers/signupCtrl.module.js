@@ -24,7 +24,7 @@ angular.module('app.signupController', [])
             });
             $rootScope.extras = false;
             sharedUtils.hideLoading();
-            $state.go('tabsController.login', {}, {location: "replace"});
+            $state.go('tabsController.signup', {}, {location: "replace"});
         }
     });
 
