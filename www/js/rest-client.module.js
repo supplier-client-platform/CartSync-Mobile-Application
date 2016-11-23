@@ -51,11 +51,11 @@ angular.module('rest-client', []).
                     callBack('error');
                 });
             },
-            getProducts: function (callBack) {
+            getProducts: function (id, callBack) {
                 $http({
                     method: 'GET'
                     , url: 'http://dev.sc-platform.api.reactive-solutions.xyz/api/v1/product/all'
-                    , params: { marketPlaceId : 1 }
+                    , params: { marketPlaceId : id }
                 }).success(function (msg) {
                     //console.log("All Products: " + JSON.stringify(msg.data));
                     callBack(msg);

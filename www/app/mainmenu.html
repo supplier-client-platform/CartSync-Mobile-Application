@@ -13,7 +13,7 @@
             <div class="list" style="margin-bottom:0cm">
                 <ion-scroll zooming="true" direction="y" style="width: auto; height:68vh">
 
-                    <a class="item item item-avatar" href="" style="background-color: #FFF;border-bottom:4px solid #ECEFF1; " ng-repeat="shop in allShops">
+                    <a class="item item item-avatar" ng-click="retrieveProducts(shop.id)" style="background-color: #FFF;border-bottom:4px solid #ECEFF1; " ng-repeat="shop in allShops">
 
                         <img ng-src="{{ shop.image }}">
                         <h2>{{ shop.name }} </h2>
@@ -63,7 +63,7 @@
                             <button class="button button-small  button-block" ng-class="$index==1?'button-assertive':''" style="box-shadow: none;margin:0cm;padding-right:0cm;padding-left:0cm;padding:0cm"> <i class="ion-heart"></i></button>
                         </div>
                         <div class="col-50" style="padding-right:0.5rem">
-                            <button class="button button-small button-block" ng-click="addToCart($index);" ng-class="item.isAdded?'button-positive':''"
+                            <button class="button button-small button-block" ng-click="addToCart(item)" ng-class="item.isAdded?'button-positive':''"
                                 style="    box-shadow: none;margin:0cm;padding:0cm"> <i class="ion-ios-cart"></i></button>
                         </div>
                     </div>

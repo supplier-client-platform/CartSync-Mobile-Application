@@ -40,6 +40,14 @@ angular.module('app.services', []).factory('fireBaseData', function($firebase, $
             showDelay: 0 // The delay in showing the indicator
         });
     };
+    functionObj.showLoadingWithText = function(text) {
+        $ionicLoading.show({
+            template: '<ion-spinner icon="ios"></ion-spinner> <br>' + text, // The text to display in the loading indicator
+            animation: 'fade-in', // The animation to use
+            showBackdrop: true, // Will a dark overlay or backdrop cover the entire view
+            showDelay: 0 // The delay in showing the indicator
+        });
+    };
     functionObj.hideLoading = function() {
         $ionicLoading.hide();
     };

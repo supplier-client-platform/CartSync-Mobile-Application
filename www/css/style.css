@@ -319,3 +319,66 @@ div.item-price-right {
     right: 35%;
     margin-left: 1%;
 }
+
+.stepper {
+  font-size: 16px;
+  color: #2d8278;
+}
+
+.stepper__input {
+  display: inline-block;
+  vertical-align: top;
+  padding: .25em .4em;
+  color: inherit;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 0;
+  background: #fff;
+  border-right: none;
+  border-left: none;
+}
+.stepper__input:focus {
+  outline: none;
+  border-color: #2d8278;
+}
+.stepper__input[type=number] {
+  -moz-appearance: textfield;
+}
+.stepper__input[type=number]::-webkit-inner-spin-button, .stepper__input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.stepper__btn, .stepper__btn--decr, .stepper__btn--incr {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  z-index: 1;
+  padding: .25em .4em;
+  border: 1px solid #ccc;
+  background: #eee;
+  color: inherit;
+}
+.stepper__btn:focus, .stepper__btn--decr:focus, .stepper__btn--incr:focus {
+  outline: none;
+  border-color: #2d8278;
+}
+.stepper__btn:hover, .stepper__btn--decr:hover, .stepper__btn--incr:hover {
+  background: #fbfbfb;
+}
+.stepper__btn[disabled], [disabled].stepper__btn--decr, [disabled].stepper__btn--incr {
+  background: #fbfbfb;
+  color: rgba(52, 149, 137, 0.4);
+}
+.stepper__btn[disabled]:focus, [disabled].stepper__btn--decr:focus, [disabled].stepper__btn--incr:focus {
+  border-color: #ccc;
+}
+
+.stepper__btn--decr {
+  margin-right: -.3em;
+  border-radius: 4px 0 0 4px;
+}
+
+.stepper__btn--incr {
+  margin-left: -.3em;
+  border-radius: 0 4px 4px 0;
+}
