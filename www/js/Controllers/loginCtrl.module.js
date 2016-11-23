@@ -13,29 +13,29 @@ angular.module('app.loginController', [])
         });
 
         //Check if user already logged in
-        firebase.auth().onAuthStateChanged(function (user) {
-            if (user) {
-
-                $ionicHistory.nextViewOptions({
-                    historyRoot: true
-                });
-                $ionicSideMenuDelegate.canDragContent(true); // Sets up the sideMenu dragable
-                $rootScope.extras = true;
-                sharedUtils.hideLoading();
-                $state.go('menu2', {}, { location: "replace" });
-
-            } else {
-                $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
-                $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
-
-                $ionicHistory.nextViewOptions({
-                    historyRoot: true
-                });
-                $rootScope.extras = false;
-                sharedUtils.hideLoading();
-                $state.go('tabsController.login', {}, { location: "replace" });
-            }
-        });
+        // firebase.auth().onAuthStateChanged(function (user) {
+        //     if (user) {
+        //
+        //         $ionicHistory.nextViewOptions({
+        //             historyRoot: true
+        //         });
+        //         $ionicSideMenuDelegate.canDragContent(true); // Sets up the sideMenu dragable
+        //         $rootScope.extras = true;
+        //         sharedUtils.hideLoading();
+        //         $state.go('menu2', {}, { location: "replace" });
+        //
+        //     } else {
+        //         $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
+        //         $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
+        //
+        //         $ionicHistory.nextViewOptions({
+        //             historyRoot: true
+        //         });
+        //         $rootScope.extras = false;
+        //         sharedUtils.hideLoading();
+        //         $state.go('tabsController.login', {}, { location: "replace" });
+        //     }
+        // });
 
         $scope.goRegister = function(){
           $state.go('tabsController.signup', {}, { location: "replace" });
@@ -65,23 +65,22 @@ angular.module('app.loginController', [])
                   //  NSString *name = profile.displayName;
                   //  NSString *email = profile.email;
 
-                    console.log("UID: " + result.uid);
-                    console.log("DisplayName: " + result.displayName);
-                    console.log("Email: " + result.email);
-                    fireBaseData.refUser().child(result.uid).once('value',function(snapshot){
-                      console.log(snapshot.val().telephone);
-
-                      $rootScope.db.insertUser(result.uid,result.displayName,parseInt(snapshot.val().telephone),result.email).then(function(res){
-                        console.log("Lol data inserted!!");
-                      });
-
-                      $rootScope.db.getUserData().then(function(res){
-                        console.log("Lol data retrieved!! " + JSON.stringify(res.rows.item(0).uid));
-                        console.log("Lol data retrieved!! " + JSON.stringify(res.rows.item(0).displayName));
-                        console.log("Lol data retrieved!! " + JSON.stringify(res.rows.item(0).telephone));
-                        console.log("Lol data retrieved!! " + JSON.stringify(res.rows.item(0).email));
-                      });
-                    });
+                    // console.log("UID: " + result.uid);
+                    // console.log("DisplayName: " + result.displayName);
+                    // console.log("Email: " + result.email);
+                    // fireBaseData.refUser().child(result.uid).once('value',function(snapshot){
+                    //   console.log(snapshot.val().telephone);
+                    //   $rootScope.db.insertUser(result.uid,result.displayName,parseInt(snapshot.val().telephone),result.email).then(function(res){
+                    //     console.log("Lol data inserted!!");
+                    //   });
+                    //
+                    //   $rootScope.db.getUserData().then(function(res){
+                    //     console.log("Lol data retrieved!! " + JSON.stringify(res.rows.item(0).uid));
+                    //     console.log("Lol data retrieved!! " + JSON.stringify(res.rows.item(0).displayName));
+                    //     console.log("Lol data retrieved!! " + JSON.stringify(res.rows.item(0).telephone));
+                    //     console.log("Lol data retrieved!! " + JSON.stringify(res.rows.item(0).email));
+                    //   });
+                    // });
 
 
 

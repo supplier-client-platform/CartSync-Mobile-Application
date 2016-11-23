@@ -1,21 +1,11 @@
 angular.module('app.signupController', [])
 
-.controller('signupCtrl', function($scope, $rootScope, sharedUtils, $ionicSideMenuDelegate,
+.controller('signupCtrl', function($scope, $rootScope, sharedUtils, $ionicSideMenuDelegate, $restClient,
     $state, fireBaseData, $ionicHistory) {
 
     //Check if user already logged in
     firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-
-            $ionicHistory.nextViewOptions({
-                historyRoot: true
-            });
-            $ionicSideMenuDelegate.canDragContent(true); // Sets up the sideMenu dragable
-            $rootScope.extras = true;
-            sharedUtils.hideLoading();
-            $state.go('menu2', {}, { location: "replace" });
-
-        }else{
+        if (user) {}else{
             $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
             $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
 
@@ -38,6 +28,7 @@ angular.module('app.signupController', [])
 
             //Main Firebase Authentication part
             firebase.auth().createUserWithEmailAndPassword(cred.email, cred.password).then(function(result) {
+              var userdetails = {};
 
                 //Add name and default dp to the Autherisation table
                 result.updateProfile({
@@ -54,10 +45,28 @@ angular.module('app.signupController', [])
                 $ionicHistory.nextViewOptions({
                     historyRoot: true
                 });
-                $ionicSideMenuDelegate.canDragContent(true); // Sets up the sideMenu dragable
-                $rootScope.extras = true;
-                sharedUtils.hideLoading();
-                $state.go('menu2', {}, { location: "replace" });
+
+                var userdetails = {
+                  displayName: cred.name,
+                  email: result.email,
+                  telephone: cred.phone,
+                  uid: result.uid
+                };
+
+                  $restClient.registerUser(userdetails,function(res){
+                    console.log("User reg res" + res.customer.id);
+
+                    $rootScope.db.insertUser(userdetails.uid,userdetails.displayName,parseInt(cred.phone),userdetails.email,parseInt(res.customer.id)).then(function(res){
+                      console.log("Lol data inserted!!");
+
+                      setTimeout(function(){
+                        $ionicSideMenuDelegate.canDragContent(true); // Sets up the sideMenu dragable
+                        $rootScope.extras = true;
+                        sharedUtils.hideLoading();
+                        $state.go('menu2', {}, { location: "replace" });
+                      },100);
+                    });
+                  });
 
             }, function(error) {
                 sharedUtils.hideLoading();

@@ -52,15 +52,28 @@ angular.module('rest-client', []).
                     callBack('error');
                 });
             },
+            registerUser: function (userdata, callBack) {
+                $http({
+                    method: 'POST'
+                    , url: 'http://dev.sc-platform.api.reactive-solutions.xyz/api/v1/customer/create/new'
+                    , params: userdata
+                }).success(function (msg) {
+                    //console.log("All Products: " + JSON.stringify(msg.data));
+                    callBack(msg);
+                }).error(function (err) {
+                    console.log(err);
+                    callBack('error');
+                });
+            },
             makeOrder: function (data, callBack) {
-                var shoppingList = [{ 
-                            productID: 1, 
+                var shoppingList = [{
+                            productID: 1,
                             productName : "Coke",
                             productBrand : "Coca-Cola",
                             productquantity: 3,
-                            totalprice : 500 
-                        }, { 
-                            productID: 3, 
+                            totalprice : 500
+                        }, {
+                            productID: 3,
                             productName : "Fanta",
                             productBrand : "Coca-Cola",
                             productquantity: 6,
@@ -70,12 +83,12 @@ angular.module('rest-client', []).
                 $http({
                     method: 'POST'
                     , url: 'http://dev.sc-platform.api.reactive-solutions.xyz/api/v1/order/create/new'
-                    , params: { 
-                        customer_id: 6650, 
+                    , params: {
+                        customer_id: 6650,
                         gross_total: 650,
                         discount : 0,
                         net_total : 1000,
-                        supplier_id : 2, 
+                        supplier_id : 2,
                         shopping_list: shoppingList
                     }
                 }).success(function (msg) {

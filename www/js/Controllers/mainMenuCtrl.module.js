@@ -41,6 +41,14 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
                 $scope.menu[i].isAdded = false;
             };
         });
+
+          $rootScope.db.getUserData().then(function(res){
+            console.log("Lol data retrieved!! " + JSON.stringify(res.rows.item(0).uid));
+            console.log("Lol data retrieved!! " + JSON.stringify(res.rows.item(0).displayName));
+            console.log("Lol data retrieved!! " + JSON.stringify(res.rows.item(0).telephone));
+            console.log("Lol data retrieved!! " + JSON.stringify(res.rows.item(0).email));
+            console.log("Lol data retrieved!! " + JSON.stringify(res.rows.item(0).id));
+          });
         //alert(JSON.stringify($scope.user_info));
     };
 

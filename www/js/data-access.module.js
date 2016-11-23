@@ -38,7 +38,7 @@ angular.module('db-access', [])
                 // 	console.log("`recorded_tags` table created!");
                 // });
 
-                this.executeQuery('CREATE TABLE IF NOT EXISTS `user_data` (uid TEXT PRIMARY KEY NOT NULL, displayName TEXT, telephone INTEGER, email TEXT)', [])
+                this.executeQuery('CREATE TABLE IF NOT EXISTS `user_data` (uid TEXT, displayName TEXT, telephone INTEGER, email TEXT, id INTEGER)', [])
                 .then(function(data){
                 	console.log("`user_data` table created!" + JSON.stringify(data));
                 	callBack();
@@ -73,8 +73,8 @@ angular.module('db-access', [])
 						// 	return this.executeQuery('UPDATE `app_settings` SET value=? WHERE id=?',[values, id]);
 						// },
 
-						insertUser: function(uid,displayName,telephone,email){
-							return this.executeQuery('INSERT INTO `user_data` (uid, displayName, telephone, email) VALUES(?,?,?,?)',[uid,displayName,telephone,email]);
+						insertUser: function(uid,displayName,telephone,email,id){
+							return this.executeQuery('INSERT INTO `user_data` (uid, displayName, telephone, email,id) VALUES(?,?,?,?,?)',[uid,displayName,telephone,email,id]);
 						},
             getUserData: function(){
             	return this.executeQuery('SELECT * FROM `user_data`',[]);
