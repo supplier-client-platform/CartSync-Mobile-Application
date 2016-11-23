@@ -35,6 +35,7 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
   };
 
   $scope.retrieveProducts = function(id) {
+    localStorage.setItem("selectedShop", id);
     $rootScope.selectedShop = id;
     sharedUtils.showLoadingWithText("Retrieving products... ");
 
@@ -52,27 +53,31 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
   };
 
   $scope.loadMenu = function() {
-    sharedUtils.showLoadingWithText("Retrieving Shops...");
-    $scope.onlyNumbers = /^\d+$/;
+    if (localStorage.getItem("selectedShop") == undefined){
+      sharedUtils.showLoadingWithText("Retrieving Shops...");
+      $scope.onlyNumbers = /^\d+$/;
 
-    $restClient.getAllBusiness(function(res) {
-      $rootScope.allShops = res;
-      sharedUtils.hideLoading();
-    });
+      $restClient.getAllBusiness(function(res) {
+        $rootScope.allShops = res;
+        sharedUtils.hideLoading();
+      });
 
-    $rootScope.db.getUserData().then(function(res) {
-      $rootScope.customerId = res.rows.item(0).id;
-      console.log("Data retrieved from db!! uid: " + JSON.stringify(res.rows.item(0).uid));
-      console.log("Data retrieved from db!! displayName: " + JSON.stringify(res.rows.item(0).displayName));
-      console.log("Data retrieved from db!! telephone: " + JSON.stringify(res.rows.item(0).telephone));
-      console.log("Data retrieved from db!! email: " + JSON.stringify(res.rows.item(0).email));
-      console.log("Data retrieved from db!! id: " + JSON.stringify(res.rows.item(0).id));
-    });
-    //alert(JSON.stringify($scope.user_info));
-    setTimeout(function() {
-      $scope.openModal();
-    }, 100);
-
+      $rootScope.db.getUserData().then(function(res) {
+        $rootScope.customerId = res.rows.item(0).id;
+        console.log("Data retrieved from db!! uid: " + JSON.stringify(res.rows.item(0).uid));
+        console.log("Data retrieved from db!! displayName: " + JSON.stringify(res.rows.item(0).displayName));
+        console.log("Data retrieved from db!! telephone: " + JSON.stringify(res.rows.item(0).telephone));
+        console.log("Data retrieved from db!! email: " + JSON.stringify(res.rows.item(0).email));
+        console.log("Data retrieved from db!! id: " + JSON.stringify(res.rows.item(0).id));
+      });
+      //alert(JSON.stringify($scope.user_info));
+      setTimeout(function() {
+        $scope.openModal();
+      }, 100);
+    }else {
+        var selectedSeller = parseInt(localStorage.getItem("selectedShop"));
+        $scope.retrieveProducts(selectedSeller);
+    }
   };
 
   $ionicModal.fromTemplateUrl('my-modal.html', {
@@ -167,10 +172,6 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
         }
       }
     }
-
-
-
-
   };
 
   $scope.removeFromCart = function(a) {

@@ -1,77 +1,88 @@
 <style>
-  .custom-dark{
-    background-color:#122912!important;
+  .custom-dark {
+    background-color: #122912!important;
 
- }
+  }
+
 </style>
 <script id="my-modal.html" type="text/ng-template">
   <ion-modal-view>
-          <ion-header-bar class="bar bar-header custom-dark">
-            <h1 class="title" style=" color: white">Select a Shop</h1>
-          </ion-header-bar>
-          <ion-content class="padding">
-            <div class="list" style="margin-bottom:0cm">
-                <ion-scroll zooming="true" direction="y" style="width: auto; height:68vh">
+    <ion-header-bar class="bar bar-header custom-dark">
+      <h1 class="title" style=" color: white">Select a Shop</h1>
+    </ion-header-bar>
+    <ion-content class="padding">
+      <div class="list" style="margin-bottom:0cm">
+        <ion-scroll zooming="true" direction="y" style="width: auto; height:68vh">
+          <a class="item item item-avatar" ng-click="retrieveProducts(shop.id)" style="background-color: #FFF;border-bottom:4px solid #ECEFF1; " ng-repeat="shop in allShops">
+            <img ng-src="{{ shop.image }}">
+            <h2>{{ shop.name }}
+            </h2>
+            <p>Tel:
+              {{ shop.contact }}</p>
+            <p>{{ shop.email }}</p>
+          </a>
 
-                    <a class="item item item-avatar" ng-click="retrieveProducts(shop.id)" style="background-color: #FFF;border-bottom:4px solid #ECEFF1; " ng-repeat="shop in allShops">
-
-                        <img ng-src="{{ shop.image }}">
-                        <h2>{{ shop.name }} </h2>
-                        <p>Tel: {{ shop.contact }}</p>
-                        <p>{{ shop.email }}</p>
-                    </a>
-                </ion-scroll>
-            </div>
-          </ion-content>
-        </ion-modal-view>
+        </ion-scroll>
+      </div>
+    </ion-content>
+  </ion-modal-view>
 </script>
 
 <ion-view style="" class=" " id="page7" title="Main Menu" ng-init="loadMenu()">
-    <ion-nav-buttons side="right">
-       <button ng-click="$navigate()" class="button button-icon button-clear" ng-class="'ion-android-cart'"> <span ng-if="cartList.length > 0" class="badge badge-assertive header-badge">{{cartList.length}}</span>  </button>
-        </ion-nav-buttons>
-    <ion-content class="has-header" padding="false" style="background-color: #ECEFF1;">
+  <ion-nav-buttons side="right">
+    <button ng-click="$navigate()" class="button button-icon button-clear" ng-class="'ion-android-cart'">
+      <span ng-if="cartList.length > 0" class="badge badge-assertive header-badge">{{cartList.length}}</span>
+    </button>
+  </ion-nav-buttons>
+  <ion-content class="has-header" padding="false" style="background-color: #ECEFF1;">
 
-        <div class="item item-input-inset" style="border: none;background-color:rgba(255,255,255,0.9)">
-            <label class="item-input-wrapper" style="background-color:#ECEFF1">
-      <input type="text" placeholder="Search Items" ng-model="searchInput">
-    </label>
+    <div class="item item-input-inset" style="border: none;background-color:rgba(255,255,255,0.9)">
+      <label class="item-input-wrapper" style="background-color:#ECEFF1">
+        <input type="text" placeholder="Search Items" ng-model="searchInput">
+      </label>
 
-        </div>
+    </div>
 
-        <div class="row flex-wrap" style="flex-wrap:wrap">
-            <div class="col-50" ng-repeat="item in menu | filter : searchInput" style="padding:0.35rem;">
-                <div style="background-color:#FFF">
+    <div class="row flex-wrap" style="flex-wrap:wrap">
+      <div class="col-50" ng-repeat="item in menu | filter : searchInput" style="padding:0.35rem;">
+        <div style="background-color:#FFF">
 
-                    <div class="item item-image" style="border-width: 0px; border-style: none;height:13rem;padding:1rem;padding-bottom:0rem">
-                        <div style="height:7rem; display: flex; align-items: center; justify-content: center;">
-                            <img ng-click="showProductInfo(item.id)" ng-src="{{item.img_url}}" width="100%" height="auto" />
-                        </div>
-                        <div style="padding-top:1rem">
-                            <div style="height:2.5rem">
-                                <h4 ng-click="showProductInfo(item.id)" style="text-align:left;white-space: normal;color:#78909C"> {{item.name | uppercase}}</h4>
-                            </div>
-                            <h4 style="text-align:left;color:#78909C">
-                                RS. <small> {{item.price | number:2}} </small>
-                            </h4>
-                        </div>
-
-                    </div>
-
-                    <div class="row">
-                        <div class="col-50" style="padding-right:0.5rem">
-                            <button class="button button-small  button-block" ng-class="$index==1?'button-assertive':''" style="box-shadow: none;margin:0cm;padding-right:0cm;padding-left:0cm;padding:0cm"> <i class="ion-heart"></i></button>
-                        </div>
-                        <div class="col-50" style="padding-right:0.5rem">
-                            <button class="button button-small button-block" ng-click="addToCart(item)" ng-class="item.isAdded?'button-positive':''"
-                                style="    box-shadow: none;margin:0cm;padding:0cm"> <i class="ion-ios-cart"></i></button>
-                        </div>
-                    </div>
-                </div>
+          <div class="item item-image" style="border-width: 0px; border-style: none;height:13rem;padding:1rem;padding-bottom:0rem">
+            <div style="height:7rem; display: flex; align-items: center; justify-content: center;">
+              <img ng-click="showProductInfo(item.id)" ng-src="{{item.img_url}}" width="100%" height="auto"/>
             </div>
-        </div>
+            <div style="padding-top:1rem">
+              <div style="height:2.5rem">
+                <h4 ng-click="showProductInfo(item.id)" style="text-align:left;white-space: normal;color:#78909C">
+                  {{item.name | uppercase}}</h4>
+              </div>
+              <h4 style="text-align:left;color:#78909C">
+                RS.
+                <small>
+                  {{item.price | number:2}}
+                </small>
+              </h4>
+            </div>
 
-        <!--<div class="col col-50 " ng-if="$index < menu.length" style="padding:1px;border-right:1px solid #999" ng-click="addToCart($index)">
+          </div>
+
+          <div class="row">
+            <div class="col-50" style="padding-right:0.5rem">
+              <button class="button button-small  button-block" ng-class="$index==1?'button-assertive':''" style="box-shadow: none;margin:0cm;padding-right:0cm;padding-left:0cm;padding:0cm">
+                <i class="ion-heart"></i>
+              </button>
+            </div>
+            <div class="col-50" style="padding-right:0.5rem">
+              <button class="button button-small button-block" ng-click="addToCart(item)" ng-class="item.isAdded?'button-positive':''" style="    box-shadow: none;margin:0cm;padding:0cm">
+                <i class="ion-ios-cart"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--<div class="col col-50 " ng-if="$index < menu.length" style="padding:1px;border-right:1px solid #999" ng-click="addToCart($index)">
 
                 <img class="add-to-cart" ng-src="img/check.png" ng-show="item.isAdded"/>
                 <div class="item item-image" style="border-width: 0px; border-style: none;">
@@ -94,6 +105,6 @@
                     </p>
                 </div>
             </div>-->
-        </div>
-    </ion-content>
+  </div>
+</ion-content>
 </ion-view>

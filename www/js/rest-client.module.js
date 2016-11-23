@@ -75,6 +75,26 @@ factory('$restClient', ['$rootScope', '$http', function($rootScope, $http) {
         callBack('error');
       });
     },
+    getAllOrders: function(id, callBack) {
+      var myOrders = [];
+      $http({
+        method: 'GET',
+        url: 'http://dev.sc-platform.api.reactive-solutions.xyz/api/v1/order/all',
+        params: {
+          marketPlaceId: id
+        }
+      }).success(function(msg) {
+        for(var i=0; i< msg.data.length; i++){
+          if(msg.data[i].customer_id == id){
+            myOrders.push(msg.data[i]);
+          }
+        };
+        callBack(myOrders);
+      }).error(function(err) {
+        console.log(err);
+        callBack('error');
+      });
+    },
     makeOrder: function(order, callBack) {
       console.log(JSON.stringify(order));
 
