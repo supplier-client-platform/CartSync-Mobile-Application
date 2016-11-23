@@ -53,11 +53,16 @@ angular.module('app.signupController', [])
                   uid: result.uid
                 };
 
-                  $restClient.registerUser(userdetails,function(res){
-                    console.log("User reg res" + res.customer.id);
+                  $restClient.registerUser(userdetails,function(customer){
+                    console.log("User reg res" + customer.customer.id);
 
-                    $rootScope.db.insertUser(userdetails.uid,userdetails.displayName,parseInt(cred.phone),userdetails.email,parseInt(res.customer.id)).then(function(res){
+                    $rootScope.db.insertUser(userdetails.uid,userdetails.displayName,parseInt(cred.phone),userdetails.email,parseInt(customer.customer.id)).then(function(res){
                       console.log("Lol data inserted!!");
+
+                      fireBaseData.refUser().child(result.uid).set({
+                          dbId: customer.customer.id,
+                          telephone: cred.phone
+                      });
 
                       setTimeout(function(){
                         $ionicSideMenuDelegate.canDragContent(true); // Sets up the sideMenu dragable

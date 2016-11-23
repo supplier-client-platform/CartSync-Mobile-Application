@@ -1,75 +1,51 @@
 <ion-view style="" class=" " id="page9" title="My Cart" ng-init="initCart()">
-    <ion-nav-buttons  side="right">
-        <button ng-if="cartList.length !== 0" ng-click="$navigate()" class="button button-icon button-clear" ng-class="'icon ion-arrow-right-c'">   </button>
-    </ion-nav-buttons>
-    <ion-content class="has-header" padding="false" style="background-color: #ECEFF1;">
+  <ion-nav-buttons side="right">
+    <button ng-if="cartList.length !== 0" ng-click="checkout()" class="button button-icon button-clear" ng-class="'icon ion-checkmark-round'"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header" padding="false" style="background-color: #ECEFF1;">
+    <div ng-if="cartList.length == 0" style="padding-top:6rem;">
+      <img src="img/empty-cart.png" alt="" style="height:8rem;padding-left:6rem">
+      <br>
+      <h3>
+        <center>Sorry! Cart is Empty!
+        </center>
+      </h3>
+    </div>
+    <div ng-if="cartList.length !== 0">
+      <div class="list" style="margin-bottom:0cm">
+        <ion-list style="width: auto; height:68vh">
 
-
-
-        <!--<div ng-repeat="item in cartList">
-            <div class="list card">
-                <div style="min-height: 30px;" class="item item-divider">{{item.item.name}} </div>
-                <div class="item item-body">
-
-                    <img ng-src="{{ item.item.img_url  }}" width="100%" height="auto" style="box-shadow: none;">
-                    <form class="list"></form>
-                    <div>
-                        <p>{{item.qty}} x Rs. {{item.item.price}} =
-                            <strong> Rs. {{ item.qty *  item.item.price  }}</strong>
-                        </p>
-                    </div>
-                    <div class="button-bar" style="box-shadow: none;">
-                        <button ng-click="removeFromCart($index)" class="button button-assertive button-block button-small icon ion-trash-a"></button>
-                        <button class="button button-stable button-clear button-block button-small icon ion-plus" ng-click="increase($index)"></button>
-                        <button class="button button-stable button-clear button-block button-small">{{item.qty}}</button>
-                        <button class="button button-stable button-clear button-block  icon ion-minus" ng-click="decrease($index)"></button>
-                    </div>
-                </div>
-            </div>
-        </div>-->
-
-        <!--<a ng-repeat="item in cartList" href="#/{{item.id}}" class="item item-thumbnail-left">
+          <ion-item can-swipe="listCanSwipe" class="item item item-avatar" href="" style="background-color: #FFF;border-bottom:4px solid #ECEFF1; " ng-repeat="item in cartList">
 
             <img ng-src="{{ item.item.img_url }}">
-            <h2>{{ item.item.name }}</h2>
-            <h4>{{ item.qty }}</h4>
-        </a>-->
+            <h2>{{ item.item.name }}
+            </h2>
+            <p>Rs.{{ item.item.price | number:2 }}
+              x
+              {{ item.qty }}</p>
 
-        <div ng-if="cartList.length == 0" style="padding-top:6rem;">
-            <img src="img/empty-cart.png" alt="" style="height:8rem;padding-left:6rem"> <br>
-            <h3>
-                <center>Sorry! Cart is Empty! </center>
-            </h3>
-        </div>
-        <div ng-if="cartList.length !== 0">
-            <div class="list" style="margin-bottom:0cm">
-                <ion-scroll zooming="true" direction="y" style="width: auto; height:68vh">
+            <ion-option-button class="button-assertive" ng-click="removeFromCart(item.item)">Delete</ion-option-button>
+          </ion-item>
+        </ion-list>
 
-                    <a class="item item item-avatar" href="" style="background-color: #FFF;border-bottom:4px solid #ECEFF1; " ng-repeat="item in cartList">
-
-                        <img ng-src="{{ item.item.img_url }}">
-                        <h2>{{ item.item.name }} </h2>
-                        <p>Rs.{{ item.item.price | number:2 }} x {{ item.qty }}</p>
-                    </a>
-                </ion-scroll>
-
-                <a class="item " href="" style="background-color: #FFF;border-bottom:4px solid #ECEFF1; ">
-                    <div class="row">
-                        <div class="col-50">
-                            <h2>Grand Total</h2>
-                        </div>
-                        <div class="col-50">
-                            <h2 style="text-align:right"> Rs. {{calculateTotal() | number:2}}</h2>
-
-                        </div>
-                    </div>
-
-                </a>
+        <a class="item " href="" style="background-color: #FFF;border-bottom:4px solid #ECEFF1; ">
+          <div class="row">
+            <div class="col-50">
+              <h2>Grand Total</h2>
             </div>
+            <div class="col-50">
+              <h2 style="text-align:right">
+                Rs.
+                {{calculateTotal() | number:2}}</h2>
 
-            <div>
-                <button style="margin-top:0cm" ng-click="checkout()" class="button button-assertive button-block ">Check Out</button>
             </div>
-        </div>
-    </ion-content>
+          </div>
+
+        </a>
+      </div>
+<!--  <div>
+        <button style="margin-top:0cm" ng-click="checkout()" class="button button-assertive button-block ">Check Out</button>
+      </div> -->
+    </div>
+  </ion-content>
 </ion-view>

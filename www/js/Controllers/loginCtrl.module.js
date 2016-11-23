@@ -44,7 +44,7 @@ angular.module('app.loginController', [])
                   console.log("Email: " + result.email);
                   fireBaseData.refUser().child(result.uid).once('value',function(snapshot){
                     console.log(snapshot.val().telephone);
-                    $rootScope.db.insertUser(result.uid,result.displayName,parseInt(snapshot.val().telephone),result.email,33).then(function(res){
+                    $rootScope.db.insertUser(result.uid,result.displayName,parseInt(snapshot.val().telephone),result.email,parseInt(snapshot.val().dbId)).then(function(res){
                       console.log("Lol data inserted!!");
 
                       if($rootScope.userLoggedIn == true){

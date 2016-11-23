@@ -1,5 +1,6 @@
 angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function($scope, $ionicModal, $firebase, $restClient, $rootScope, $ionicSideMenuDelegate, fireBaseData, $state, $ionicHistory, $firebaseArray, $ionicPopup, sharedCartService, sharedUtils, $ionicLoading) {
   $scope.quantity = 0;
+  $rootScope.cartList = [];
   //Check if user already logged in
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
@@ -37,10 +38,10 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
     sharedUtils.showLoadingWithText("Retrieving products... ");
 
     $restClient.getProducts(id, function(msg) {
-      $scope.menu = msg.data;
+      $rootScope.menu = msg.data;
 
-      for (var i = 0; i < $scope.menu.length; i++) {
-        $scope.menu[i].isAdded = false;
+      for (var i = 0; i < $rootScope.menu.length; i++) {
+        $rootScope.menu[i].isAdded = false;
       };
 
       sharedUtils.hideLoading();
@@ -59,6 +60,7 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
     });
 
     $rootScope.db.getUserData().then(function(res) {
+      $rootScope.customerId = res.rows.item(0).id;
       console.log("Data retrieved from db!! uid: " + JSON.stringify(res.rows.item(0).uid));
       console.log("Data retrieved from db!! displayName: " + JSON.stringify(res.rows.item(0).displayName));
       console.log("Data retrieved from db!! telephone: " + JSON.stringify(res.rows.item(0).telephone));
@@ -98,7 +100,7 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
   });
 
   $scope.isAdded = function(a) {
-    var itemId = $scope.menu[a].id;
+    var itemId = $rootScope.menu[a].id;
     for (var i = 0; i < $rootScope.cartList.length; i++) {
       if ($rootScope.cartList[i].item.id == itemId) {
         return true;
@@ -127,10 +129,10 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
     console.log(itemId);
     //console.log("Item: " + JSON.stringify(a));
 
-    for (var i = 0; i < $scope.menu.length; i++) {
+    for (var i = 0; i < $rootScope.menu.length; i++) {
       $scope.i = i;
-      if (parseInt($scope.menu[i].id) == parseInt(itemId)) {
-        if ($scope.menu[i].isAdded == true) {
+      if (parseInt($rootScope.menu[i].id) == parseInt(itemId)) {
+        if ($rootScope.menu[i].isAdded == true) {
           $scope.removeFromCart(itemId);
         } else {
 
@@ -149,12 +151,12 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
                   e.preventDefault();
                 } else {
                   console.log($scope.quantity);
-                  $scope.menu[$scope.i].isAdded = true;
-                  console.log(JSON.stringify($scope.menu[$scope.i]));
+                  $rootScope.menu[$scope.i].isAdded = true;
+                  console.log(JSON.stringify($rootScope.menu[$scope.i]));
 
                   $rootScope.cartList.push({
                     qty: $scope.quantity,
-                    item: $scope.menu[$scope.i]
+                    item: $rootScope.menu[$scope.i]
                   });
                 }
               }
@@ -186,9 +188,9 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
           for (var i = 0; i < $rootScope.cartList.length; i++) {
             if ($rootScope.cartList[i].item.id == itemId) {
               $rootScope.cartList.splice(i, 1);
-              for (var j = 0; j < $scope.menu.length; j++) {
-                if ($scope.menu[j].id == itemId) {
-                  $scope.menu[j].isAdded = false;
+              for (var j = 0; j < $rootScope.menu.length; j++) {
+                if ($rootScope.menu[j].id == itemId) {
+                  $rootScope.menu[j].isAdded = false;
                 };
               }
             }
