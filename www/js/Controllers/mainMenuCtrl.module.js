@@ -34,7 +34,7 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
     $scope.loadMenu = function() {
         $scope.onlyNumbers = /^\d+$/;
         $restClient.getProducts(function(msg) {
-            console.log(JSON.stringify(msg));
+            //console.log(JSON.stringify(msg));
             $scope.menu = msg.data;
 
             for (var i = 0; i < $scope.menu.length; i++) {

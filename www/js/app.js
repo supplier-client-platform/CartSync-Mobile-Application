@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'firebase', 'app.loginController', 'app.signupController', 'app.mainMenucontroller', 'app.offersController', 'app.indexController', 'app.myCartController', 'app.lastOrdersController', 'app.favouriteController', 'app.settingsController', 'app.supportController', 'app.forgotPasswordController', 'app.CheckoutController'])
+angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'firebase', 'app.loginController', 'app.signupController', 'app.mainMenucontroller', 'app.offersController', 'app.indexController', 'app.myCartController', 'app.lastOrdersController', 'app.favouriteController', 'app.settingsController', 'app.supportController', 'app.forgotPasswordController', 'db-access', 'app.CheckoutController'])
 
     .config(function ($ionicConfigProvider) {
         //Added config
@@ -16,7 +16,7 @@ angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 
         $ionicConfigProvider.backButton.text('').icon('ion-arrow-left-c').previousTitleText(false);
         $ionicConfigProvider.navBar.alignTitle('center');
     })
-    .run(function ($ionicPlatform, $rootScope, $state) {
+    .run(function ($ionicPlatform, $rootScope, $state, $dbService) {
         $rootScope.cartList = [];
         $rootScope.extras = false;
 
@@ -53,9 +53,20 @@ angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 
                     return "";
             }
         };
-        
+
 
         $ionicPlatform.ready(function () {
+            // Initialize SQLite DB
+            $rootScope.db = $dbService.openDataConnection();
+            $rootScope.db.init(function () {
+              // $rootScope.db.insertUser('lol','abcc',56,'loll').then(function(res){
+              //   console.log("Lol data inserted!!");
+              // });
+              // $rootScope.db.getUserData().then(function(res){
+              //   console.log("Lol data retrieved!!" + JSON.stringify(res));
+              // });
+            });
+
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
             if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {

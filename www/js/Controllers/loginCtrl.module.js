@@ -1,6 +1,6 @@
 angular.module('app.loginController', [])
 
-    .controller('loginCtrl', function ($scope, $rootScope, $ionicHistory, sharedUtils, $state, $ionicSideMenuDelegate) {
+    .controller('loginCtrl', function ($scope, $rootScope, $ionicHistory, sharedUtils, $state, $ionicSideMenuDelegate, fireBaseData) {
         $rootScope.extras = false; // For hiding the side bar and nav icon
 
         // When the user logs out and reaches login page,
@@ -37,6 +37,9 @@ angular.module('app.loginController', [])
             }
         });
 
+        $scope.goRegister = function(){
+          $state.go('tabsController.signup', {}, { location: "replace" });
+        };
 
         $scope.loginEmail = function (formName, cred) {
 
@@ -57,6 +60,30 @@ angular.module('app.loginController', [])
                     // 2. Set rootScope.extra;
                     // 3. Turn off the loading
                     // 4. Got to menu page
+
+                  //   NSString *uid = profile.uid;  // Provider-specific UID
+                  //  NSString *name = profile.displayName;
+                  //  NSString *email = profile.email;
+
+                    console.log("UID: " + result.uid);
+                    console.log("DisplayName: " + result.displayName);
+                    console.log("Email: " + result.email);
+                    fireBaseData.refUser().child(result.uid).once('value',function(snapshot){
+                      console.log(snapshot.val().telephone);
+
+                      $rootScope.db.insertUser(result.uid,result.displayName,parseInt(snapshot.val().telephone),result.email).then(function(res){
+                        console.log("Lol data inserted!!");
+                      });
+
+                      $rootScope.db.getUserData().then(function(res){
+                        console.log("Lol data retrieved!! " + JSON.stringify(res.rows.item(0).uid));
+                        console.log("Lol data retrieved!! " + JSON.stringify(res.rows.item(0).displayName));
+                        console.log("Lol data retrieved!! " + JSON.stringify(res.rows.item(0).telephone));
+                        console.log("Lol data retrieved!! " + JSON.stringify(res.rows.item(0).email));
+                      });
+                    });
+
+
 
                     $ionicHistory.nextViewOptions({
                         historyRoot: true

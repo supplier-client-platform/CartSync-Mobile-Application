@@ -5,13 +5,13 @@
 </style>
 
 
-<ion-view style="" class=" " id="page5" title="Login" hide-nav-bar="true">
+<ion-view style="" class=" " id="page5" on-swipe-left="goRegister()" title="Login" hide-nav-bar="true">
     <img src="img/bg1.jpg" style=" height: 100%; width: 100%;">
 
     <ion-content>
 
 
-        <form name="loginForm" class="list " style="padding:1rem" id="login-form1">
+        <form name="loginForm" class="list " style="padding:1rem" id="login-form1" ng-submit="loginEmail(loginForm,user)">
             <div class="app-icon">
             </div>
             <h3 class="logo-font" style="color:rgba(255,255,255,0.68);margin-top:0.5rem">
@@ -35,7 +35,7 @@
                 </label>
                     </div>
 
-                </ion-list> 
+                </ion-list>
                 <div class="row">
                     <div class="col-50" style="padding:1%">
                         <button ng-click="loginFb('facebook')" style="font-size:80%;padding-right: 1rem;padding-left:1rem" class="  button button-positive button-small button-block icon-left ion-social-facebook "

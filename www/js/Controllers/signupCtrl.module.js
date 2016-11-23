@@ -68,6 +68,10 @@ angular.module('app.signupController', [])
             sharedUtils.showAlert("Please note", "Entered data is not valid");
         }
 
-    }
+    };
+
+    $scope.goLogin = function(){
+      $state.go('tabsController.login', {}, { location: "replace" });
+    };
 
 })
