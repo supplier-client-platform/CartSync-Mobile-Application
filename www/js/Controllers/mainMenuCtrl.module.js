@@ -1,6 +1,7 @@
 angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function($scope, $ionicModal, $firebase, $restClient, $rootScope, $ionicSideMenuDelegate, fireBaseData, $state, $ionicHistory, $firebaseArray, $ionicPopup, sharedCartService, sharedUtils, $ionicLoading) {
   $scope.quantity = 0;
   $rootScope.cartList = [];
+  $scope.searchInput = "";
   //Check if user already logged in
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {

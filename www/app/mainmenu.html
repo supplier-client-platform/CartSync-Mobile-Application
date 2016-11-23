@@ -34,13 +34,13 @@
 
         <div class="item item-input-inset" style="border: none;background-color:rgba(255,255,255,0.9)">
             <label class="item-input-wrapper" style="background-color:#ECEFF1">
-      <input type="text" placeholder="Search Items">
+      <input type="text" placeholder="Search Items" ng-model="searchInput">
     </label>
 
         </div>
 
         <div class="row flex-wrap" style="flex-wrap:wrap">
-            <div class="col-50" ng-repeat="item in menu" style="padding:0.35rem;">
+            <div class="col-50" ng-repeat="item in menu | filter : searchInput" style="padding:0.35rem;">
                 <div style="background-color:#FFF">
 
                     <div class="item item-image" style="border-width: 0px; border-style: none;height:13rem;padding:1rem;padding-bottom:0rem">
