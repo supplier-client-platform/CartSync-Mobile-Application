@@ -113,28 +113,28 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
     }
   };
 
-  $ionicModal.fromTemplateUrl('my-modal.html', {
+  $ionicModal.fromTemplateUrl('app/shopSelection.html', {
     scope: $scope,
     animation: 'slide-in-up'
   }).then(function(modal) {
-    $scope.modal = modal;
+    $rootScope.modal = modal;
   });
   $scope.openModal = function() {
-    $scope.modal.show();
+    $rootScope.modal.show();
   };
   $scope.closeModal = function() {
-    $scope.modal.hide();
+    $rootScope.modal.hide();
   };
   // Cleanup the modal when we're done with it!
   $scope.$on('$destroy', function() {
-    $scope.modal.remove();
+    $rootScope.modal.remove();
   });
   // Execute action on hide modal
-  $scope.$on('modal.hidden', function() {
+  $rootScope.$on('modal.hidden', function() {
     // Execute action
   });
   // Execute action on remove modal
-  $scope.$on('modal.removed', function() {
+  $rootScope.$on('modal.removed', function() {
     // Execute action
   });
 

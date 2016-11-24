@@ -5,28 +5,9 @@
   }
 
 </style>
-<script id="my-modal.html" type="text/ng-template">
-  <ion-modal-view>
-    <ion-header-bar class="bar bar-header custom-dark">
-      <h1 class="title" style=" color: white">Select a Shop</h1>
-    </ion-header-bar>
-    <ion-content class="padding">
-      <div class="list" style="margin-bottom:0cm">
-        <ion-scroll zooming="true" direction="y" style="width: auto; height:68vh">
-          <a class="item item item-avatar" ng-click="retrieveProducts(shop.id)" style="background-color: #FFF;border-bottom:4px solid #ECEFF1; " ng-repeat="shop in allShops">
-            <img ng-src="{{ shop.image }}">
-            <h2>{{ shop.name }}
-            </h2>
-            <p>Tel:
-              {{ shop.contact }}</p>
-            <p>{{ shop.email }}</p>
-          </a>
+<!-- <script id="my-modal.html" type="text/ng-template">
 
-        </ion-scroll>
-      </div>
-    </ion-content>
-  </ion-modal-view>
-</script>
+</script> -->
 
 <ion-view style="" class=" " id="page7" title="Main Menu" ng-init="loadMenu()">
   <ion-nav-buttons side="right">

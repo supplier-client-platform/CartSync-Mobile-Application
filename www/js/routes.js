@@ -26,6 +26,12 @@ angular.module('app.routes', [])
     }
   })
 
+  .state('shopselection', {
+    url: '/shopselection',
+    templateUrl: 'app/shopSelection.html',
+    controller: 'mainMenuCtrl'
+  })
+
   .state('tabsController.signup', {
     url: '/page6',
     views: {
