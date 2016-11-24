@@ -16,6 +16,7 @@
     </button>
   </ion-nav-buttons>
   <ion-content class="has-header" padding="false" style="background-color: #ECEFF1;">
+    <ion-refresher pulling-text="Pull to refresh..." on-refresh="retrieveProducts('refresh')"></ion-refresher>
 
     <div class="item item-input-inset" style="border: none;background-color:rgba(255,255,255,0.9)">
       <label class="item-input-wrapper" style="background-color:#ECEFF1">

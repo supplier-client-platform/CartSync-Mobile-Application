@@ -35,43 +35,60 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
   };
 
   $scope.retrieveProducts = function(id) {
-    var confirmPopup = $ionicPopup.confirm({
-      title: 'Save your choice?',
-      template: 'Do you want to save your choice?'
-    });
+    if (id === 'refresh') {
+      sharedUtils.showLoadingWithText("Retrieving products... ");
 
-    confirmPopup.then(function(res) {
-      if (res) {
-        localStorage.setItem("selectedShop", id);
-        $rootScope.selectedShop = id;
-        sharedUtils.showLoadingWithText("Retrieving products... ");
+      $restClient.getProducts($rootScope.selectedShop, function(msg) {
+        $rootScope.menu = msg.data;
 
-        $restClient.getProducts(id, function(msg) {
-          $rootScope.menu = msg.data;
+        for (var i = 0; i < $rootScope.menu.length; i++) {
+          $rootScope.menu[i].isAdded = false;
+        };
 
-          for (var i = 0; i < $rootScope.menu.length; i++) {
-            $rootScope.menu[i].isAdded = false;
-          };
+        sharedUtils.hideLoading();
+        $scope.$broadcast('scroll.refreshComplete');
+        return;
+      });
 
-          sharedUtils.hideLoading();
-          $scope.closeModal();
-        });
-      } else {
-        $rootScope.selectedShop = id;
-        sharedUtils.showLoadingWithText("Retrieving products... ");
+    } else {
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'Save your choice?',
+        template: 'Do you want to save your choice?'
+      });
 
-        $restClient.getProducts(id, function(msg) {
-          $rootScope.menu = msg.data;
+      confirmPopup.then(function(res) {
+        if (res) {
+          localStorage.setItem("selectedShop", id);
+          $rootScope.selectedShop = id;
+          sharedUtils.showLoadingWithText("Retrieving products... ");
 
-          for (var i = 0; i < $rootScope.menu.length; i++) {
-            $rootScope.menu[i].isAdded = false;
-          };
+          $restClient.getProducts(id, function(msg) {
+            $rootScope.menu = msg.data;
 
-          sharedUtils.hideLoading();
-          $scope.closeModal();
-        });
-      }
-    });
+            for (var i = 0; i < $rootScope.menu.length; i++) {
+              $rootScope.menu[i].isAdded = false;
+            };
+
+            sharedUtils.hideLoading();
+            $scope.closeModal();
+          });
+        } else {
+          $rootScope.selectedShop = id;
+          sharedUtils.showLoadingWithText("Retrieving products... ");
+
+          $restClient.getProducts(id, function(msg) {
+            $rootScope.menu = msg.data;
+
+            for (var i = 0; i < $rootScope.menu.length; i++) {
+              $rootScope.menu[i].isAdded = false;
+            };
+
+            sharedUtils.hideLoading();
+            $scope.closeModal();
+          });
+        }
+      });
+    }
   };
 
   $scope.loadMenu = function() {
@@ -101,6 +118,7 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
       sharedUtils.showLoadingWithText("Retrieving products... ");
 
       $restClient.getProducts(selectedSeller, function(msg) {
+        $rootScope.selectedShop = selectedSeller;
         $rootScope.menu = msg.data;
 
         for (var i = 0; i < $rootScope.menu.length; i++) {
