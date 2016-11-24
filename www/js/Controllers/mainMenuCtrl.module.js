@@ -35,25 +35,47 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
   };
 
   $scope.retrieveProducts = function(id) {
-    localStorage.setItem("selectedShop", id);
-    $rootScope.selectedShop = id;
-    sharedUtils.showLoadingWithText("Retrieving products... ");
-
-    $restClient.getProducts(id, function(msg) {
-      $rootScope.menu = msg.data;
-
-      for (var i = 0; i < $rootScope.menu.length; i++) {
-        $rootScope.menu[i].isAdded = false;
-      };
-
-      sharedUtils.hideLoading();
-      $scope.closeModal();
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Save your choice?',
+      template: 'Do you want to save your choice?'
     });
 
+    confirmPopup.then(function(res) {
+      if (res) {
+        localStorage.setItem("selectedShop", id);
+        $rootScope.selectedShop = id;
+        sharedUtils.showLoadingWithText("Retrieving products... ");
+
+        $restClient.getProducts(id, function(msg) {
+          $rootScope.menu = msg.data;
+
+          for (var i = 0; i < $rootScope.menu.length; i++) {
+            $rootScope.menu[i].isAdded = false;
+          };
+
+          sharedUtils.hideLoading();
+          $scope.closeModal();
+        });
+      } else {
+        $rootScope.selectedShop = id;
+        sharedUtils.showLoadingWithText("Retrieving products... ");
+
+        $restClient.getProducts(id, function(msg) {
+          $rootScope.menu = msg.data;
+
+          for (var i = 0; i < $rootScope.menu.length; i++) {
+            $rootScope.menu[i].isAdded = false;
+          };
+
+          sharedUtils.hideLoading();
+          $scope.closeModal();
+        });
+      }
+    });
   };
 
   $scope.loadMenu = function() {
-    if (localStorage.getItem("selectedShop") == undefined){
+    if (localStorage.getItem("selectedShop") == undefined) {
       sharedUtils.showLoadingWithText("Retrieving Shops...");
       $scope.onlyNumbers = /^\d+$/;
 
@@ -74,9 +96,20 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
       setTimeout(function() {
         $scope.openModal();
       }, 100);
-    }else {
-        var selectedSeller = parseInt(localStorage.getItem("selectedShop"));
-        $scope.retrieveProducts(selectedSeller);
+    } else {
+      var selectedSeller = parseInt(localStorage.getItem("selectedShop"));
+      sharedUtils.showLoadingWithText("Retrieving products... ");
+
+      $restClient.getProducts(selectedSeller, function(msg) {
+        $rootScope.menu = msg.data;
+
+        for (var i = 0; i < $rootScope.menu.length; i++) {
+          $rootScope.menu[i].isAdded = false;
+        };
+
+        sharedUtils.hideLoading();
+        $scope.closeModal();
+      });
     }
   };
 
@@ -116,17 +149,17 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
     }
   };
 
-  $scope.increaseQty = function(){
+  $scope.increaseQty = function() {
     $scope.quantity = parseInt($scope.quantity) + 1;
   };
 
-  $scope.decreaseQty = function(){
+  $scope.decreaseQty = function() {
     $scope.quantity = parseInt($scope.quantity) - 1;
   }
 
   $scope.$watch('quantity', function() {
-        $scope.quantity = parseInt($scope.quantity);
-    });
+    $scope.quantity = parseInt($scope.quantity);
+  });
 
   $scope.addToCart = function(a) {
     $scope.quantity = 0;
@@ -146,9 +179,9 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
             template: '<div class="stepper row" style="font-size:29px"><button class="stepper__btn--decr" ng-disabled="quantity == 0" ng-click="decreaseQty()" style=" width: 20%">-</button><input style=" width: 70%" type="number" class="stepper__input" pattern="[0-9]" value="0" ng-model="quantity"/><button style=" width: 20%" ng-click="increaseQty()" class="stepper__btn--incr">+</button></div>',
             title: 'Please Enter Quantity',
             scope: $scope,
-            buttons: [
-              { text: 'Cancel' },
-            {
+            buttons: [{
+              text: 'Cancel'
+            }, {
               text: '<b>Save</b>',
               type: 'button-positive',
               onTap: function(e) {
