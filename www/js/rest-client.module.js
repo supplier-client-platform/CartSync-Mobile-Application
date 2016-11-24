@@ -7,7 +7,7 @@ angular.module('rest-client', []).
 config(['$httpProvider', function($httpProvider) {
   $httpProvider.defaults.headers.put = $httpProvider.defaults.headers.post;
 }]).
-factory('$restClient', ['$rootScope', '$http', function($rootScope, $http) {
+factory('$restClient', ['$rootScope', '$http', '$q', function($rootScope, $http, $q) {
   return {
     getUserDetails: function(callBack) {
       $http({
@@ -75,21 +75,17 @@ factory('$restClient', ['$rootScope', '$http', function($rootScope, $http) {
         callBack('error');
       });
     },
-    getAllOrders: function(id, callBack) {
-      var myOrders = [];
+    getAllOrders: function(nextPage, callBack) {
       $http({
         method: 'GET',
-        url: 'http://dev.sc-platform.api.reactive-solutions.xyz/api/v1/order/all',
+        url: (nextPage == '' ? 'http://dev.sc-platform.api.reactive-solutions.xyz/api/v1/order/all' : nextPage),
         params: {
-          marketPlaceId: id
+          marketPlaceId: $rootScope.selectedShop,
+          contact_number: $rootScope.telephone
         }
       }).success(function(msg) {
-        for(var i=0; i< msg.data.length; i++){
-          if(msg.data[i].customer_id == id){
-            myOrders.push(msg.data[i]);
-          }
-        };
-        callBack(myOrders);
+        //console.log(JSON.stringify(msg));
+        callBack(msg);
       }).error(function(err) {
         console.log(err);
         callBack('error');

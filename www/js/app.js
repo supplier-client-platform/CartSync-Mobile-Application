@@ -59,12 +59,6 @@ angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 
             // Initialize SQLite DB
             $rootScope.db = $dbService.openDataConnection();
             $rootScope.db.init(function () {
-              // $rootScope.db.insertUser('lol','abcc',56,'loll').then(function(res){
-              //   console.log("Lol data inserted!!");
-              // });
-              // $rootScope.db.getUserData().then(function(res){
-              //   console.log("Lol data retrieved!!" + JSON.stringify(res));
-              // });
               $rootScope.db.getUserData().then(function(res){
                 if (parseInt(res.rows.length) <= 0) {
                   $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
@@ -77,6 +71,18 @@ angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 
                   sharedUtils.hideLoading();
                   $state.go('tabsController.login', {}, { location: "replace" });
                 } else {
+                  $rootScope.customerId = res.rows.item(0).id;
+                  $rootScope.displayName = res.rows.item(0).displayName;
+                  $rootScope.telephone = res.rows.item(0).telephone;
+                  $rootScope.email = res.rows.item(0).email;
+                  $rootScope.uid = res.rows.item(0).uid;
+
+                  console.log("Data retrieved from db!! uid: " + JSON.stringify(res.rows.item(0).uid));
+                  console.log("Data retrieved from db!! displayName: " + JSON.stringify(res.rows.item(0).displayName));
+                  console.log("Data retrieved from db!! telephone: " + JSON.stringify(res.rows.item(0).telephone));
+                  console.log("Data retrieved from db!! email: " + JSON.stringify(res.rows.item(0).email));
+                  console.log("Data retrieved from db!! id: " + JSON.stringify(res.rows.item(0).id));
+
                   $ionicHistory.nextViewOptions({
                       historyRoot: true
                   });

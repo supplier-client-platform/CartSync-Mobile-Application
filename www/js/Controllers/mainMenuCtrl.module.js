@@ -91,7 +91,7 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
     }
   };
 
-  $scope.loadMenu = function() {
+  $rootScope.loadMenu = function() {
     if (localStorage.getItem("selectedShop") == undefined) {
       sharedUtils.showLoadingWithText("Retrieving Shops...");
       $scope.onlyNumbers = /^\d+$/;
@@ -101,14 +101,9 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
         sharedUtils.hideLoading();
       });
 
-      $rootScope.db.getUserData().then(function(res) {
-        $rootScope.customerId = res.rows.item(0).id;
-        console.log("Data retrieved from db!! uid: " + JSON.stringify(res.rows.item(0).uid));
-        console.log("Data retrieved from db!! displayName: " + JSON.stringify(res.rows.item(0).displayName));
-        console.log("Data retrieved from db!! telephone: " + JSON.stringify(res.rows.item(0).telephone));
-        console.log("Data retrieved from db!! email: " + JSON.stringify(res.rows.item(0).email));
-        console.log("Data retrieved from db!! id: " + JSON.stringify(res.rows.item(0).id));
-      });
+      // $rootScope.db.getUserData().then(function(res) {
+      //
+      // });
       //alert(JSON.stringify($scope.user_info));
       setTimeout(function() {
         $scope.openModal();

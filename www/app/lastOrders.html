@@ -1,21 +1,18 @@
-<ion-view style="" class=" " id="page10" title="Orders" ng-init="retrieveOrders()">
-    <ion-content class="has-header" padding="true">
-      <ion-list ng-repeat="item in orders">
+<ion-view style="" class=" " id="page10" title="Orders" ng-init="retrieveOrders('')">
+  <ion-content class="has-header">
+    <ion-refresher pulling-text="Pull to refresh..." on-refresh="retrieveOrders('')"></ion-refresher>
+    <ion-list style="width: auto; height:68vh">
 
-        <ion-item class="item-thumbnail-left" >
-
-          <img  ng-src="{{'img/fk/'+ item.product_image +'.jpg'}}" >
-
-          <a class="badge badge-balanced" style="position: absolute;right:0;" >{{item.status}}</a>
-
-          <h4> {{item.product_name}} </h4>
-          <p>Qty: {{item.item_qty}}  Price: &#8377; {{item.product_price}}</p>
-
-
-        </ion-item>
-
-      </ion-list>
-
-
-    </ion-content>
+      <ion-item can-swipe="listCanSwipe" class="item item-thumbnail-left" href="" style="background-color: #FFF;border-bottom:4px solid #ECEFF1; " ng-repeat="order in myOrders.data">
+        <img ng-src="img/{{ order.status }}.png">
+        <h2 style=" overflow:visible">{{ order.created_at }}</h2>
+        <p>Total:
+          {{ order.gross_total | number:2 }}</p>
+        <p>Status:
+          <b>{{ order.status }}</b>
+        </p>
+      </ion-item>
+      <ion-infinite-scroll ng-if="myOrders.next_page_url !== null" on-infinite="retrieveOrders(myOrders.next_page_url)" distance="1%"></ion-infinite-scroll>
+    </ion-list>
+  </ion-content>
 </ion-view>
