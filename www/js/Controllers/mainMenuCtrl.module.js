@@ -30,11 +30,18 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
     }
   });
 
-  $scope.isActive = function() {
-    return true;
-  };
+  // $scope.isActive = function() {
+  //   return true;
+  // };
 
   $scope.retrieveProducts = function(id) {
+    // $rootScope.db.getFavourites(id).then(function(result){
+    //   if(result.rows.length <= 0){
+    //
+    //   }else{
+    //
+    //   }
+    // });
     if (id === 'refresh') {
       sharedUtils.showLoadingWithText("Retrieving products... ");
 
@@ -91,8 +98,8 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
     }
   };
 
-  $rootScope.loadMenu = function() {
-    if (localStorage.getItem("selectedShop") == undefined) {
+  $rootScope.loadMenu = function(a) {
+    if (localStorage.getItem("selectedShop") == undefined || a == 'switch') {
       sharedUtils.showLoadingWithText("Retrieving Shops...");
       $scope.onlyNumbers = /^\d+$/;
 

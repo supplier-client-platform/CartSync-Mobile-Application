@@ -43,6 +43,11 @@ angular.module('db-access', [])
                 	console.log("`user_data` table created!" + JSON.stringify(data));
                 	callBack();
                 });
+								this.executeQuery('CREATE TABLE IF NOT EXISTS `favourites` (storeId NUMBER, itemId TEXT)', [])
+								.then(function(data){
+									console.log("`favourites` table created!" + JSON.stringify(data));
+									callBack();
+								});
 
 						},
 
@@ -51,6 +56,11 @@ angular.module('db-access', [])
               .then(function(data){
                 console.log("`user_data` table is cleared!");
               });
+
+							this.executeQuery('DELETE FROM `favourites`', [])
+							.then(function(data){
+								console.log("`favourites` table is cleared!");
+							});
             },
 
 						dropTables: function(){
@@ -58,6 +68,11 @@ angular.module('db-access', [])
               .then(function(data){
                 console.log("`user_data` table is dropeed!");
               });
+
+							this.executeQuery('DROP TABLE `favourites`', [])
+							.then(function(data){
+								console.log("`favourites` table is dropeed!");
+							});
             },
 
 						// insertVideos: function(eventId, footageId, fileName, filePath){
@@ -72,12 +87,20 @@ angular.module('db-access', [])
 						// updateSettings: function(id, values){
 						// 	return this.executeQuery('UPDATE `app_settings` SET value=? WHERE id=?',[values, id]);
 						// },
-
+						deleteFavourite: function(storeId, itemId){
+							return this.executeQuery('DELETE FROM `favourites` WHERE storeId = ? AND itemId = ?',[storeId, itemId]);
+						},
+						insertFavourite: function(storeId, itemId){
+							return this.executeQuery('INSERT INTO `favourites` (storeId, itemId) VALUES(?,?)',[storeId, itemId]);
+						},
 						insertUser: function(uid,displayName,telephone,email,id){
 							return this.executeQuery('INSERT INTO `user_data` (uid, displayName, telephone, email,id) VALUES(?,?,?,?,?)',[uid,displayName,telephone,email,id]);
 						},
             getUserData: function(){
             	return this.executeQuery('SELECT * FROM `user_data`',[]);
+            },
+            getFavourites: function(storeId){
+            	return this.executeQuery('SELECT * FROM `favourites` WHERE storeId=?',[storeId]);
             }
 					};
 				}catch(err){
