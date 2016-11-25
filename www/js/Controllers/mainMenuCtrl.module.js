@@ -1,6 +1,7 @@
 angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function($scope, $ionicModal, $firebase, $restClient, $rootScope, $ionicSideMenuDelegate, fireBaseData, $state, $ionicHistory, $firebaseArray, $ionicPopup, sharedCartService, sharedUtils, $ionicLoading) {
   $scope.quantity = 0;
   $rootScope.cartList = [];
+  $rootScope.favourites = [];
   $scope.searchInput = "";
   //Check if user already logged in
   firebase.auth().onAuthStateChanged(function(user) {
@@ -30,18 +31,48 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
     }
   });
 
-  // $scope.isActive = function() {
-  //   return true;
-  // };
+  $scope.isFavourite = function(itemId) {
+    return ($rootScope.favourites.indexOf(""+itemId) == -1 ? 'false' : 'true');
+  };
+
+  $scope.addFavourite = function(item) {
+    // console.log("itemId: " + item.id);
+    // console.log("storeId: " + $rootScope.selectedShop);
+    var itemId = item.id;
+    var storeId = $rootScope.selectedShop;
+
+    if ($rootScope.favourites.indexOf(""+itemId) == -1 || $rootScope.favourites.length == 0) {
+      $rootScope.db.insertFavourite(storeId, itemId).then(function(result) {
+        console.log("Favourite Added: " + JSON.stringify(result));
+        $rootScope.favourites.push(itemId);
+      });
+    }else {
+      $rootScope.db.deleteFavourite(storeId, itemId).then(function(result) {
+        console.log("Favourite Removed: " + JSON.stringify(result));
+        $rootScope.favourites.splice($rootScope.favourites.indexOf(""+itemId));
+      });
+    }
+
+    $scope.retrieveFavourites(storeId);
+  };
+
+  $scope.retrieveFavourites = function(storeId){
+    $rootScope.db.getFavourites(storeId).then(function(result) {
+      if (result.rows.length <= 0) {
+        $rootScope.favourites = [];
+      } else {
+        for (var i = 0; i < result.rows.length; i++) {
+          $rootScope.favourites.push(result.rows.item(i).itemId);
+        }
+        console.log("Fav DB: " + JSON.stringify($rootScope.favourites));
+      }
+    });
+  };
 
   $scope.retrieveProducts = function(id) {
-    // $rootScope.db.getFavourites(id).then(function(result){
-    //   if(result.rows.length <= 0){
-    //
-    //   }else{
-    //
-    //   }
-    // });
+    var storeId = (id == 'refresh' ? $rootScope.selectedShop : id);
+    $scope.retrieveFavourites(storeId);
+
     if (id === 'refresh') {
       sharedUtils.showLoadingWithText("Retrieving products... ");
 
@@ -99,7 +130,7 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
   };
 
   $rootScope.loadMenu = function(a) {
-    if (localStorage.getItem("selectedShop") == undefined || a == 'switch') {
+    if (localStorage.getItem("selectedShop") == undefined || a !== undefined) {
       sharedUtils.showLoadingWithText("Retrieving Shops...");
       $scope.onlyNumbers = /^\d+$/;
 
@@ -118,6 +149,8 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
     } else {
       var selectedSeller = parseInt(localStorage.getItem("selectedShop"));
       sharedUtils.showLoadingWithText("Retrieving products... ");
+
+      $scope.retrieveFavourites(selectedSeller);
 
       $restClient.getProducts(selectedSeller, function(msg) {
         $rootScope.selectedShop = selectedSeller;

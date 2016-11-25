@@ -50,7 +50,7 @@
 
           <div class="row">
             <div class="col-50" style="padding-right:0.5rem">
-              <button class="button button-small  button-block" ng-class="$index==1?'button-assertive':''" style="box-shadow: none;margin:0cm;padding-right:0cm;padding-left:0cm;padding:0cm">
+              <button class="button button-small  button-block" ng-click="addFavourite(item)" ng-class="isFavourite(item.id) == 'true'?'button-assertive':''" style="box-shadow: none;margin:0cm;padding-right:0cm;padding-left:0cm;padding:0cm">
                 <i class="ion-heart"></i>
               </button>
             </div>

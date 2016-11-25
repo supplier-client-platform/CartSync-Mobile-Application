@@ -45,7 +45,7 @@ angular.module('app.loginController', [])
                   fireBaseData.refUser().child(result.uid).once('value',function(snapshot){
                     console.log(snapshot.val().telephone);
                     $rootScope.db.insertUser(result.uid,result.displayName,parseInt(snapshot.val().telephone),result.email,parseInt(snapshot.val().dbId)).then(function(res){
-                      console.log("Lol data inserted!!");
+                      console.log("User data inserted!!");
 
                       if($rootScope.userLoggedIn == true){
                         $ionicHistory.nextViewOptions({
