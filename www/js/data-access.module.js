@@ -43,6 +43,7 @@ angular.module('db-access', [])
                 	console.log("`user_data` table created!" + JSON.stringify(data));
                 	callBack();
                 });
+
 								this.executeQuery('CREATE TABLE IF NOT EXISTS `favourites` (storeId NUMBER, itemId TEXT)', [])
 								.then(function(data){
 									console.log("`favourites` table created!" + JSON.stringify(data));

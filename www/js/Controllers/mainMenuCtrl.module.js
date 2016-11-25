@@ -31,38 +31,44 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
     }
   });
 
-  $scope.isFavourite = function(itemId) {
-    return ($rootScope.favourites.indexOf(""+itemId) == -1 ? 'false' : 'true');
+  $scope.isFavourite = function(item) {
+    return ($rootScope.favourites.indexOf(item.id) === -1 ? 'false' : 'true');
   };
 
   $scope.addFavourite = function(item) {
-    // console.log("itemId: " + item.id);
+    console.log("Add called");
     // console.log("storeId: " + $rootScope.selectedShop);
     var itemId = item.id;
     var storeId = $rootScope.selectedShop;
 
-    if ($rootScope.favourites.indexOf(""+itemId) == -1 || $rootScope.favourites.length == 0) {
+    if ($rootScope.favourites.indexOf(itemId) == -1) {
       $rootScope.db.insertFavourite(storeId, itemId).then(function(result) {
         console.log("Favourite Added: " + JSON.stringify(result));
         $rootScope.favourites.push(itemId);
+        $scope.retrieveFavourites(storeId);
       });
-    }else {
+    } else {
       $rootScope.db.deleteFavourite(storeId, itemId).then(function(result) {
         console.log("Favourite Removed: " + JSON.stringify(result));
-        $rootScope.favourites.splice($rootScope.favourites.indexOf(""+itemId));
+        $rootScope.favourites.splice($rootScope.favourites.indexOf(itemId), 1);
+        $scope.retrieveFavourites(storeId);
       });
-    }
+    };
 
-    $scope.retrieveFavourites(storeId);
+
   };
 
-  $scope.retrieveFavourites = function(storeId){
+  $scope.retrieveFavourites = function(storeId) {
+    console.log("Retrieving fav for shop " + storeId);
     $rootScope.db.getFavourites(storeId).then(function(result) {
       if (result.rows.length <= 0) {
         $rootScope.favourites = [];
       } else {
+
         for (var i = 0; i < result.rows.length; i++) {
-          $rootScope.favourites.push(result.rows.item(i).itemId);
+          if ($rootScope.favourites.indexOf(result.rows.item(i).itemId) !== -1) {
+            $rootScope.favourites.push(result.rows.item(i).itemId);
+          }
         }
         console.log("Fav DB: " + JSON.stringify($rootScope.favourites));
       }
@@ -130,7 +136,7 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
   };
 
   $rootScope.loadMenu = function(a) {
-    if (localStorage.getItem("selectedShop") == undefined || a !== undefined) {
+    if (localStorage.getItem("selectedShop") == undefined || a == 'switch') {
       sharedUtils.showLoadingWithText("Retrieving Shops...");
       $scope.onlyNumbers = /^\d+$/;
 
@@ -149,16 +155,18 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
     } else {
       var selectedSeller = parseInt(localStorage.getItem("selectedShop"));
       sharedUtils.showLoadingWithText("Retrieving products... ");
-
-      $scope.retrieveFavourites(selectedSeller);
+      console.log("Selected seller: " + selectedSeller);
+      $rootScope.selectedShop = selectedSeller;
+      $rootScope.menu = [];
 
       $restClient.getProducts(selectedSeller, function(msg) {
-        $rootScope.selectedShop = selectedSeller;
+
         $rootScope.menu = msg.data;
 
         for (var i = 0; i < $rootScope.menu.length; i++) {
           $rootScope.menu[i].isAdded = false;
         };
+        // $scope.retrieveFavourites(selectedSeller);
 
         sharedUtils.hideLoading();
         $scope.closeModal();

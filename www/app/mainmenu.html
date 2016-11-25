@@ -9,7 +9,7 @@
 
 </script> -->
 
-<ion-view style="" class=" " id="page7" title="Main Menu" ng-init="loadMenu()">
+<ion-view style="" class=" " id="page7" title="Main Menu" ng-init="loadMenu('menu')">
   <ion-nav-buttons side="right">
     <button ng-click="$navigate()" class="button button-icon button-clear" ng-class="'ion-android-cart'">
       <span ng-if="cartList.length > 0" class="badge badge-assertive header-badge">{{cartList.length}}</span>
@@ -50,7 +50,7 @@
 
           <div class="row">
             <div class="col-50" style="padding-right:0.5rem">
-              <button class="button button-small  button-block" ng-click="addFavourite(item)" ng-class="isFavourite(item.id) == 'true'?'button-assertive':''" style="box-shadow: none;margin:0cm;padding-right:0cm;padding-left:0cm;padding:0cm">
+              <button class="button button-small  button-block" ng-click="addFavourite(item)" ng-class="isFavourite(item) == 'true'?'button-assertive':''" style="box-shadow: none;margin:0cm;padding-right:0cm;padding-left:0cm;padding:0cm">
                 <i class="ion-heart"></i>
               </button>
             </div>
