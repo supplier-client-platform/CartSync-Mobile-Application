@@ -37,7 +37,7 @@ angular.module('app.loginController', [])
 
                 //Email
                 firebase.auth().signInWithEmailAndPassword(cred.email, cred.password).then(function (result) {
-                  $rootScope.db.cleanData();
+                  // $rootScope.db.cleanData();
 
                   console.log("UID: " + result.uid);
                   console.log("DisplayName: " + result.displayName);

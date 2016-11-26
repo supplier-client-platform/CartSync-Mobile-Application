@@ -136,7 +136,7 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
   };
 
   $rootScope.loadMenu = function(a) {
-    if (localStorage.getItem("selectedShop") == undefined || a == 'switch') {
+    if (localStorage.getItem("selectedShop") == undefined || a === 'switch') {
       sharedUtils.showLoadingWithText("Retrieving Shops...");
       $scope.onlyNumbers = /^\d+$/;
 
