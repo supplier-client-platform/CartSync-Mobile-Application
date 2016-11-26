@@ -101,7 +101,7 @@ angular.module('app.routes', [])
     }
   })
 
-$urlRouterProvider.otherwise('/page1/page5')
+$urlRouterProvider.otherwise('/page1/page6')
 
 
 

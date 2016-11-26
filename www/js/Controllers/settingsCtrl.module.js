@@ -147,8 +147,10 @@ angular.module('app.settingsController', [])
 
     $scope.cancel=function(){
       // Simple Reload
-      $window.location.reload(true);
-      console.log("CANCEL");
+      //$window.location.reload(true);
+      //console.log("CANCEL");
+      $state.go('menu2', {}, { location: "replace" });
+
     }
 
 })

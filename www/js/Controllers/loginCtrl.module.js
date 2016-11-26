@@ -31,7 +31,7 @@ angular.module('app.loginController', [])
 
         $scope.loginEmail = function (formName, cred) {
             if (formName.$valid) { // Check if the form data is valid or not
-                sharedUtils.showLoading();
+                sharedUtils.showLoadingWithText("Logging In...");
                 // handle undefined error
                 cred = cred ? cred : {};
 

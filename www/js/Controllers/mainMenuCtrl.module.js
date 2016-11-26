@@ -60,14 +60,15 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
 
   $scope.retrieveFavourites = function(storeId) {
     console.log("Retrieving fav for shop " + storeId);
-    $rootScope.db.getFavourites(storeId).then(function(result) {
+    $rootScope.db.getFavourites("" + storeId).then(function(result) {
       if (result.rows.length <= 0) {
         $rootScope.favourites = [];
+        console.log("No favs in DB");
       } else {
-
+        console.log("Favs in DB" + result.rows.length);
         for (var i = 0; i < result.rows.length; i++) {
-          if ($rootScope.favourites.indexOf(result.rows.item(i).itemId) !== -1) {
-            $rootScope.favourites.push(result.rows.item(i).itemId);
+          if ($rootScope.favourites.indexOf(parseInt(result.rows.item(i).itemId)) == -1) {
+            $rootScope.favourites.push(parseInt(result.rows.item(i).itemId));
           }
         }
         console.log("Fav DB: " + JSON.stringify($rootScope.favourites));
@@ -77,6 +78,7 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
 
   $scope.retrieveProducts = function(id) {
     var storeId = (id == 'refresh' ? $rootScope.selectedShop : id);
+    console.log("Retrieving products for shop " + storeId);
     $scope.retrieveFavourites(storeId);
 
     if (id === 'refresh') {
@@ -152,25 +154,33 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
       setTimeout(function() {
         $scope.openModal();
       }, 100);
-    } else {
-      var selectedSeller = parseInt(localStorage.getItem("selectedShop"));
-      sharedUtils.showLoadingWithText("Retrieving products... ");
-      console.log("Selected seller: " + selectedSeller);
-      $rootScope.selectedShop = selectedSeller;
-      $rootScope.menu = [];
+    } else{
+      setTimeout(function(){
+        var selectedSeller = parseInt(localStorage.getItem("selectedShop"));
+        sharedUtils.showLoadingWithText("Retrieving products... ");
+        console.log("Selected seller: " + selectedSeller);
+        $rootScope.selectedShop = selectedSeller;
+        $rootScope.menu = [];
 
-      $restClient.getProducts(selectedSeller, function(msg) {
+        $restClient.getProducts(selectedSeller, function(msg) {
+          $scope.retrieveFavourites(selectedSeller);
 
-        $rootScope.menu = msg.data;
+          $rootScope.menu = msg.data;
 
-        for (var i = 0; i < $rootScope.menu.length; i++) {
-          $rootScope.menu[i].isAdded = false;
-        };
-        // $scope.retrieveFavourites(selectedSeller);
+          for (var i = 0; i < $rootScope.menu.length; i++) {
+            $rootScope.menu[i].isAdded = false;
+          };
+          // $scope.retrieveFavourites(selectedSeller);
 
-        sharedUtils.hideLoading();
-        $scope.closeModal();
-      });
+          sharedUtils.hideLoading();
+          // console.log($rootScope.modal.isShown());
+          if ($rootScope.modal.isShown()) {
+            $scope.closeModal();
+          }
+
+        });
+      },700);
+
     }
   };
 

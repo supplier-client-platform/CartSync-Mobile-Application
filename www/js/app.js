@@ -19,6 +19,7 @@ angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 
   .run(function($ionicPlatform, $rootScope, $state, $dbService, $ionicHistory, $ionicSideMenuDelegate, sharedUtils) {
     $rootScope.cartList = [];
     $rootScope.favourites = [];
+    $rootScope.menu = [];
     $rootScope.extras = false;
 
     $rootScope.$secondaryBtn = 'Cart';
@@ -57,49 +58,47 @@ angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 
 
 
     $ionicPlatform.ready(function() {
-      ionic.Platform.fullScreen();
-      if (window.StatusBar) {
-        return StatusBar.hide();
-      }
       // Initialize SQLite DB
       $rootScope.db = $dbService.openDataConnection();
-      $rootScope.db.init(function() {
-        $rootScope.db.getUserData().then(function(res) {
-          if (parseInt(res.rows.length) <= 0) {
-            $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
-            $ionicSideMenuDelegate.canDragContent(false); // To remove the sidemenu white space
+      setTimeout(function(){
+        $rootScope.db.init(function() {
+          $rootScope.db.getUserData().then(function(res) {
+            if (parseInt(res.rows.length) <= 0) {
+              $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
+              $ionicSideMenuDelegate.canDragContent(false); // To remove the sidemenu white space
 
-            $ionicHistory.nextViewOptions({
-              historyRoot: true
-            });
-            $rootScope.extras = false;
-            sharedUtils.hideLoading();
-            //$state.go('tabsController.login', {}, { location: "replace" });
-          } else {
-            $rootScope.customerId = res.rows.item(0).id;
-            $rootScope.displayName = res.rows.item(0).displayName;
-            $rootScope.telephone = res.rows.item(0).telephone;
-            $rootScope.email = res.rows.item(0).email;
-            $rootScope.uid = res.rows.item(0).uid;
+              $ionicHistory.nextViewOptions({
+                historyRoot: true
+              });
+              $rootScope.extras = false;
+              sharedUtils.hideLoading();
+              //$state.go('tabsController.login', {}, { location: "replace" });
+            } else {
+              $rootScope.customerId = res.rows.item(0).id;
+              $rootScope.displayName = res.rows.item(0).displayName;
+              $rootScope.telephone = res.rows.item(0).telephone;
+              $rootScope.email = res.rows.item(0).email;
+              $rootScope.uid = res.rows.item(0).uid;
 
-            console.log("Data retrieved from db!! uid: " + JSON.stringify(res.rows.item(0).uid));
-            console.log("Data retrieved from db!! displayName: " + JSON.stringify(res.rows.item(0).displayName));
-            console.log("Data retrieved from db!! telephone: " + JSON.stringify(res.rows.item(0).telephone));
-            console.log("Data retrieved from db!! email: " + JSON.stringify(res.rows.item(0).email));
-            console.log("Data retrieved from db!! id: " + JSON.stringify(res.rows.item(0).id));
+              console.log("Data retrieved from db!! uid: " + JSON.stringify(res.rows.item(0).uid));
+              console.log("Data retrieved from db!! displayName: " + JSON.stringify(res.rows.item(0).displayName));
+              console.log("Data retrieved from db!! telephone: " + JSON.stringify(res.rows.item(0).telephone));
+              console.log("Data retrieved from db!! email: " + JSON.stringify(res.rows.item(0).email));
+              console.log("Data retrieved from db!! id: " + JSON.stringify(res.rows.item(0).id));
 
-            $ionicHistory.nextViewOptions({
-              historyRoot: true
-            });
-            $ionicSideMenuDelegate.canDragContent(true); // Sets up the sideMenu dragable
-            $rootScope.extras = true;
-            sharedUtils.hideLoading();
-            $state.go('menu2', {}, {
-              location: "replace"
-            });
-          }
+              $ionicHistory.nextViewOptions({
+                historyRoot: true
+              });
+              $ionicSideMenuDelegate.canDragContent(true); // Sets up the sideMenu dragable
+              $rootScope.extras = true;
+              sharedUtils.hideLoading();
+              $state.go('menu2', {}, {
+                location: "replace"
+              });
+            }
+          });
         });
-      });
+      },1000);
 
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -111,8 +110,8 @@ angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 
         console.log("came here");
         // org.apache.cordova.statusbar required
         //StatusBar.styleDefault();
-        StatusBar.backgroundColorByHexString("#25263a");
-        ionic.Platform.fullScreen(true, true);
+        StatusBar.hide();
+        ionic.Platform.fullScreen();
       }
     });
 

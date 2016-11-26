@@ -1,3 +1,30 @@
-<ion-view style="" class=" " id="page11" title="Favourite ">
-    <ion-content class="has-header" padding="true"></ion-content>
+<ion-view style="" class=" " id="page8" title="My Favourites" ng-init="initFavourites()">
+  <ion-content class="has-header" padding="true">
+    <div ng-if="myFavourites.length == 0" style="padding-top:6rem;">
+      <img src="img/empty-cart.png" alt="" style="height:8rem;padding-left:6rem">
+      <br>
+      <h3>
+        <center>Sorry!<br>You haven't set any favourites.
+        </center>
+      </h3>
+    </div>
+
+    <div ng-if="favourites.length !== 0">
+      <div class="list" style="margin-bottom:0cm">
+        <ion-list style="width: auto; height:68vh">
+
+          <ion-item can-swipe="listCanSwipe" class="item item item-avatar" href="" style="background-color: #FFF;border-bottom:4px solid #ECEFF1; " ng-repeat="favourite in myFavourites">
+
+            <img ng-src="{{ favourite.img_url }}">
+            <h2>{{ favourite.name }}
+            </h2>
+            <p>Rs.{{ favourite.price | number:2 }}</p>
+          </ion-item>
+        </ion-list>
+      </div>
+      <!--  <div>
+          <button style="margin-top:0cm" ng-click="checkout()" class="button button-assertive button-block ">Check Out</button>
+        </div> -->
+    </div>
+  </ion-content>
 </ion-view>

@@ -8,11 +8,13 @@ angular.module('app.offersController', [])
   //We need $ionicSideMenuDelegate.canDragContent(true) only on the menu, ie after login page
   $rootScope.extras = true;
 
-  // $scope.initFavourites = function() {
-  //   for (var i = 0; i < $rootScope.menu.length; i++) {
-  //     if ($rootScope.favourites.indexOf($rootScope.menu[i].id) !== -1) {
-  //       $scope.myFavourites.push($rootScope.menu[i]);
-  //     }
-  //   }
-  // };
+  $scope.initFavourites = function() {
+    for (var i = 0; i < $rootScope.menu.length; i++) {
+      if ($rootScope.favourites.indexOf($rootScope.menu[i].id) !== -1) {
+        $scope.myFavourites.push($rootScope.menu[i]);
+      }
+    }
+    console.log("My Favs: " + JSON.stringify($scope.myFavourites));
+  };
+
 })
