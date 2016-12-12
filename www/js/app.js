@@ -65,9 +65,12 @@ angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 
       var pusher = new Pusher($rootScope.PUSHER_APPKEY);
       var order = pusher.subscribe($rootScope.PUSHER_CHANNEL);
 
-
       pusher.connection.bind('connected', function() {
-        console.log('Realtime is go!');
+        console.log('Pusher Connected! Realtime is go!');
+      });
+
+      pusher.connection.bind('disconnected', function(data) {
+        console.log('Pusher Disconnected!');
       });
 
       order.bind("order_mobile_notifications", function (data) {
