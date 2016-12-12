@@ -75,6 +75,7 @@ angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 
 
       order.bind("order_mobile_notifications", function (data) {
         console.log("order_mobile_notifications!!!");
+
         console.log(JSON.stringify(data));
       });
 

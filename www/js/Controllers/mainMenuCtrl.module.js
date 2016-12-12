@@ -74,6 +74,7 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
         });
     };
     $scope.retrieveProducts = function (id) {
+        if ($rootScope.modal) $rootScope.modal.remove();
         var storeId = (id == 'refresh' ? $rootScope.selectedShop : id);
         console.log("Retrieving products for shop " + storeId);
         $scope.retrieveFavourites(storeId);
@@ -162,6 +163,7 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
             }, 700);
         }
     };
+    if ($rootScope.modal) $rootScope.modal.remove();
     $ionicModal.fromTemplateUrl('app/shopSelection.html', {
         scope: $scope
         , animation: 'slide-in-up'
