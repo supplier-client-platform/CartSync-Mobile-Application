@@ -23,6 +23,8 @@
     <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
     <script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+
+    <script src="lib/pusher-js/dist/web/pusher.js" type="text/javascript"></script>
     <script>
         // You have to replace this section with your custome config
         // Initialize Firebase
@@ -33,6 +35,12 @@
             storageBucket: "",
         };
         firebase.initializeApp(config);
+
+        Pusher.log = function(data) {
+          if(window.console !== undefined) {
+            console.log('\t\t', data);
+          }
+        };
     </script>
     <!--======================================================================================================-->
     <style type="text/css">

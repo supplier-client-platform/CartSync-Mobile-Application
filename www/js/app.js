@@ -22,6 +22,10 @@ angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 
     $rootScope.menu = [];
     $rootScope.extras = false;
 
+    //Pusher Config
+    $rootScope.PUSHER_APPKEY = '20b67caf4dad6ad7ae0d';
+    $rootScope.PUSHER_CHANNEL = 'order';
+
     $rootScope.$secondaryBtn = 'Cart';
     $rootScope.$navigate = function() {
       switch ($rootScope.$secondaryBtn) {
@@ -58,6 +62,19 @@ angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 
 
 
     $ionicPlatform.ready(function() {
+      var pusher = new Pusher($rootScope.PUSHER_APPKEY);
+      var order = pusher.subscribe($rootScope.PUSHER_CHANNEL);
+
+
+      pusher.connection.bind('connected', function() {
+        console.log('Realtime is go!');
+      });
+
+      order.bind("order_mobile_notifications", function (data) {
+        console.log("order_mobile_notifications!!!");
+        console.log(JSON.stringify(data));
+      });
+
       // Initialize SQLite DB
       $rootScope.db = $dbService.openDataConnection();
       setTimeout(function(){
