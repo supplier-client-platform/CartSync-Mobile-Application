@@ -165,7 +165,7 @@
                             id="menu-list-item2" class="item-icon-left  sidebar-item"> <i class="icon ion-ios-pricetag-outline"></i>Favourites</ion-item> -->
                         <ion-item ng-class="{activeClicked: isActive('/page9')}" data-componentid="list-item8" style="" menu-close="" ui-sref="myCart"
                             id="menu-list-item8" class="item-icon-left  sidebar-item"> <i class="icon ion-ios-cart-outline"></i>My Cart</ion-item>
-                        <ion-item ng-class="{activeClicked: isActive('/page10')}" data-componentid="list-item3" style="" menu-close="" ui-sref="lastOrders"
+                        <ion-item ng-controller="lastOrdersCtrl" ng-click="clearNotifications()" ng-class="{activeClicked: isActive('/page10')}" data-componentid="list-item3" style="" menu-close="" ui-sref="lastOrders"
                             id="menu-list-item3" class="item-icon-left  sidebar-item"> <i class="icon ion-ios-clock-outline"></i>Orders<span ng-if="notificationCount > 0" class="badge badge-assertive">{{notificationCount}}</span></ion-item>
                         <ion-item ng-class="{activeClicked: isActive('/page11')}" data-componentid="list-item4" style="" menu-close="" ui-sref="favourite"
                             id="menu-list-item4" class="item-icon-left  sidebar-item"> <i class="icon ion-ios-star-outline"></i>Favourites</ion-item>

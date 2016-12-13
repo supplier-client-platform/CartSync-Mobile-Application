@@ -2,9 +2,13 @@ angular.module('app.lastOrdersController', [])
 
 .controller('lastOrdersCtrl', function($scope, $rootScope, fireBaseData, sharedUtils, $restClient, $q) {
   $scope.myOrders = {};
-  $rootScope.notificationCount = 0;
+
+  $scope.clearNotifications = function(){
+    $rootScope.notificationCount = 0;
+  };
 
   $scope.retrieveOrders = function(a) {
+    $rootScope.notificationCount = 0;
     if (a == '') {
       sharedUtils.showLoadingWithText("Retrieving last orders... ");
       $restClient.getAllOrders(a, function(msg) {
