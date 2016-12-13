@@ -47,10 +47,10 @@ factory('$restClient', ['$rootScope', '$http', '$q', function($rootScope, $http,
         callBack('error');
       });
     },
-    getProducts: function(id, callBack) {
+    getProducts: function(nextUrl, id, callBack) {
       $http({
         method: 'GET',
-        url: 'http://dev.sc-platform.api.reactive-solutions.xyz/api/v1/product/all',
+        url: (nextUrl ==='' ? 'http://dev.sc-platform.api.reactive-solutions.xyz/api/v1/product/all' : nextUrl),
         params: {
           marketPlaceId: id
         }

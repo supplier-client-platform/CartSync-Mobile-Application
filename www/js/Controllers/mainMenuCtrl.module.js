@@ -88,7 +88,8 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
         $scope.retrieveFavourites(storeId);
         if (id === 'refresh') {
             sharedUtils.showLoadingWithText("Retrieving products... ");
-            $restClient.getProducts($rootScope.selectedShop, function (msg) {
+            $restClient.getProducts('',$rootScope.selectedShop, function (msg) {
+                $rootScope.retrievedMenu = msg;
                 $rootScope.menu = msg.data;
                 for (var i = 0; i < $rootScope.menu.length; i++) {
                     $rootScope.menu[i].isAdded = false;
@@ -116,7 +117,8 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
 
                     $rootScope.selectedShop = id;
                     sharedUtils.showLoadingWithText("Retrieving products... ");
-                    $restClient.getProducts(id, function (msg) {
+                    $restClient.getProducts('',id, function (msg) {
+                        $rootScope.retrievedMenu = msg;
                         $rootScope.menu = msg.data;
                         for (var i = 0; i < $rootScope.menu.length; i++) {
                             $rootScope.menu[i].isAdded = false;
@@ -128,7 +130,8 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
                 else {
                     $rootScope.selectedShop = id;
                     sharedUtils.showLoadingWithText("Retrieving products... ");
-                    $restClient.getProducts(id, function (msg) {
+                    $restClient.getProducts('',id, function (msg) {
+                        $rootScope.retrievedMenu = msg;
                         $rootScope.menu = msg.data;
                         for (var i = 0; i < $rootScope.menu.length; i++) {
                             $rootScope.menu[i].isAdded = false;
@@ -201,9 +204,10 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
                 console.log("Selected seller: " + selectedSeller);
                 $rootScope.selectedShop = selectedSeller;
                 $rootScope.menu = [];
-                $restClient.getProducts(selectedSeller, function (msg) {
+                $restClient.getProducts('',selectedSeller, function (msg) {
                     $scope.retrieveFavourites(selectedSeller);
                     $rootScope.menu = msg.data;
+                    $rootScope.retrievedMenu = msg;
                     for (var i = 0; i < $rootScope.menu.length; i++) {
                         $rootScope.menu[i].isAdded = false;
                     };
@@ -216,6 +220,33 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
                 });
             }, 700);
         }
+    };
+
+    $rootScope.loadMoreProducts = function (nextUrl) {
+      //console.log(nextUrl);
+      // setTimeout(function(){
+      //   console.log(nextUrl);
+      //   $scope.$broadcast('scroll.infiniteScrollComplete');
+      // },500);
+      var selectedSeller = parseInt(localStorage.getItem("selectedShop"));
+      sharedUtils.showLoadingWithText("Retrieving more products... ");
+
+      $restClient.getProducts(nextUrl,selectedSeller, function (msg) {
+
+        console.log(JSON.stringify(msg));
+        $rootScope.retrievedMenu = msg;
+
+        for(var i = 0 ; i< msg.data.length; i++){
+          $rootScope.menu.push(msg.data[i]);
+        }
+
+        for (var i = 0; i < $rootScope.menu.length; i++) {
+          $rootScope.menu[i].isAdded = false;
+        };
+        sharedUtils.hideLoading();
+        $scope.$broadcast('scroll.refreshComplete');
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+      });
     };
 
     if ($rootScope.modal) $rootScope.modal.hide();

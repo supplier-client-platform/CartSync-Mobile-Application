@@ -63,6 +63,7 @@
         </div>
       </div>
     </div>
+    <ion-infinite-scroll ng-if="retrievedMenu.next_page_url !== null" immediate-check="false" on-infinite="loadMoreProducts(retrievedMenu.next_page_url)" ng-if="vm.localDataManager.canGetData()" distance="1%"></ion-infinite-scroll>
 
   </div>
 </ion-content>
