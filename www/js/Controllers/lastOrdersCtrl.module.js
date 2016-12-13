@@ -2,6 +2,7 @@ angular.module('app.lastOrdersController', [])
 
 .controller('lastOrdersCtrl', function($scope, $rootScope, fireBaseData, sharedUtils, $restClient, $q) {
   $scope.myOrders = {};
+  $rootScope.notificationCount = 0;
 
   $scope.retrieveOrders = function(a) {
     if (a == '') {

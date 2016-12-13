@@ -4,6 +4,7 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
     $rootScope.cartList = [];
     $rootScope.favourites = [];
     $scope.searchInput = "";
+
     //Check if user already logged in
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
