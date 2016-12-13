@@ -74,9 +74,17 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
         });
     };
     $scope.retrieveProducts = function (id) {
-        if ($rootScope.modal) $rootScope.modal.remove();
+        if ($rootScope.modal) $rootScope.modal.hide();
         var storeId = (id == 'refresh' ? $rootScope.selectedShop : id);
         console.log("Retrieving products for shop " + storeId);
+
+      for(var i=0; i<$rootScope.allShops.length; i++){
+        if($rootScope.allShops[i].id == storeId){
+          $rootScope.avatarUrl = $rootScope.allShops[i].image;
+          break;
+        }
+      }
+
         $scope.retrieveFavourites(storeId);
         if (id === 'refresh') {
             sharedUtils.showLoadingWithText("Retrieving products... ");
@@ -98,6 +106,14 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
             confirmPopup.then(function (res) {
                 if (res) {
                     localStorage.setItem("selectedShop", id);
+
+                  for(var i=0; i<$rootScope.allShops.length; i++){
+                    if($rootScope.allShops[i].id == storeId){
+                      localStorage.setItem("imgUrl", $rootScope.allShops[i].image);
+                      break;
+                    }
+                  }
+
                     $rootScope.selectedShop = id;
                     sharedUtils.showLoadingWithText("Retrieving products... ");
                     $restClient.getProducts(id, function (msg) {
@@ -144,8 +160,16 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
       });
     };
 
+    $rootScope.emptyShop = function(){
+      localStorage.setItem("selectedShop",undefined);
+    };
+
     $rootScope.loadMenu = function (a) {
         if($rootScope.initSuccess === undefined) $rootScope.initPusher();
+
+        if(localStorage.getItem("imgUrl") !== undefined){
+          $rootScope.avatarUrl = localStorage.getItem("imgUrl");
+        }
 
         if (localStorage.getItem("selectedShop") == undefined || a === 'switch') {
             sharedUtils.showLoadingWithText("Retrieving Shops...");
@@ -158,11 +182,13 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
             //
             // });
             //alert(JSON.stringify($scope.user_info));
+
+
             setTimeout(function () {
                 $scope.openModal();
             }, 100);
         }
-        else {
+        else if(a !== 'switch'){
             setTimeout(function () {
                 var selectedSeller = parseInt(localStorage.getItem("selectedShop"));
                 sharedUtils.showLoadingWithText("Retrieving products... ");
@@ -185,7 +211,8 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
             }, 700);
         }
     };
-    if ($rootScope.modal) $rootScope.modal.remove();
+
+    if ($rootScope.modal) $rootScope.modal.hide();
     $ionicModal.fromTemplateUrl('app/shopSelection.html', {
         scope: $scope
         , animation: 'slide-in-up'
@@ -210,6 +237,7 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
     $rootScope.$on('modal.removed', function () {
         // Execute action
     });
+
     $scope.isAdded = function (a) {
         var itemId = $rootScope.menu[a].id;
         for (var i = 0; i < $rootScope.cartList.length; i++) {

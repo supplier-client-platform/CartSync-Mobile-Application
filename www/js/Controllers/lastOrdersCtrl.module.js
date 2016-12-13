@@ -3,6 +3,10 @@ angular.module('app.lastOrdersController', [])
 .controller('lastOrdersCtrl', function($scope, $rootScope, fireBaseData, sharedUtils, $restClient, $q) {
   $scope.myOrders = {};
 
+  $scope.clearNotifications = function(){
+    $rootScope.notificationCount = 0;
+  };
+
   $scope.retrieveOrders = function(a) {
     $rootScope.notificationCount = 0;
     if (a == '') {
