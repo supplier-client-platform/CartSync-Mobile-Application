@@ -4,6 +4,7 @@ angular.module('app.lastOrdersController', [])
   $scope.myOrders = {};
 
   $scope.retrieveOrders = function(a) {
+    $rootScope.notificationCount = 0;
     if (a == '') {
       sharedUtils.showLoadingWithText("Retrieving last orders... ");
       $restClient.getAllOrders(a, function(msg) {

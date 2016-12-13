@@ -74,6 +74,7 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
         });
     };
     $scope.retrieveProducts = function (id) {
+        if ($rootScope.modal) $rootScope.modal.remove();
         var storeId = (id == 'refresh' ? $rootScope.selectedShop : id);
         console.log("Retrieving products for shop " + storeId);
         $scope.retrieveFavourites(storeId);
@@ -123,7 +124,29 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
             });
         }
     };
+
+    $rootScope.initPusher = function () {
+      $rootScope.initSuccess = true;
+      var pusher = new Pusher($rootScope.PUSHER_APPKEY);
+      var order = pusher.subscribe($rootScope.PUSHER_CHANNEL);
+
+
+      pusher.connection.bind('connected', function() {
+        console.log('Pusher Connected. Realtime is go!');
+      });
+
+      order.bind("order_mobile_notifications" + $rootScope.customerId, function (data) {
+        console.log("order_mobile_notifications!!!");
+        $rootScope.notificationCount += 1;
+        console.log($rootScope.notificationCount);
+        console.log(JSON.stringify(data));
+        $rootScope.$apply();
+      });
+    };
+
     $rootScope.loadMenu = function (a) {
+        if($rootScope.initSuccess === undefined) $rootScope.initPusher();
+
         if (localStorage.getItem("selectedShop") == undefined || a === 'switch') {
             sharedUtils.showLoadingWithText("Retrieving Shops...");
             $scope.onlyNumbers = /^\d+$/;
@@ -162,6 +185,7 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
             }, 700);
         }
     };
+    if ($rootScope.modal) $rootScope.modal.remove();
     $ionicModal.fromTemplateUrl('app/shopSelection.html', {
         scope: $scope
         , animation: 'slide-in-up'

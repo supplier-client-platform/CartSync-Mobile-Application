@@ -21,6 +21,7 @@ angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 
     $rootScope.favourites = [];
     $rootScope.menu = [];
     $rootScope.extras = false;
+    $rootScope.notificationCount = 0;
 
     //Pusher Config
     $rootScope.PUSHER_APPKEY = '20b67caf4dad6ad7ae0d';
@@ -62,18 +63,7 @@ angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 
 
 
     $ionicPlatform.ready(function() {
-      var pusher = new Pusher($rootScope.PUSHER_APPKEY);
-      var order = pusher.subscribe($rootScope.PUSHER_CHANNEL);
 
-
-      pusher.connection.bind('connected', function() {
-        console.log('Realtime is go!');
-      });
-
-      order.bind("order_mobile_notifications", function (data) {
-        console.log("order_mobile_notifications!!!");
-        console.log(JSON.stringify(data));
-      });
 
       // Initialize SQLite DB
       $rootScope.db = $dbService.openDataConnection();
@@ -91,6 +81,7 @@ angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 
               sharedUtils.hideLoading();
               //$state.go('tabsController.login', {}, { location: "replace" });
             } else {
+              if($rootScope.customerId !== undefined) return;
               $rootScope.customerId = res.rows.item(0).id;
               $rootScope.displayName = res.rows.item(0).displayName;
               $rootScope.telephone = res.rows.item(0).telephone;
@@ -106,6 +97,7 @@ angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 
               $ionicHistory.nextViewOptions({
                 historyRoot: true
               });
+
               $ionicSideMenuDelegate.canDragContent(true); // Sets up the sideMenu dragable
               $rootScope.extras = true;
               sharedUtils.hideLoading();
