@@ -1,10 +1,19 @@
 angular.module('app.myCartController', [])
 
-.controller('myCartCtrl', function($scope, $rootScope, $state, $ionicPopup, sharedCartService, $restClient, $ionicHistory) {
+.controller('myCartCtrl', function($scope, $rootScope, $state, $ionicPopup, sharedCartService, $restClient, $ionicHistory, $ionicScrollDelegate) {
 
   $rootScope.$secondaryBtn = 'Checkout';
   $scope.initCart = function() {
+    $scope.loadImages();
     //$ionicHistory.clearHistory();
+  }
+
+  $scope.images = [];
+
+  $scope.loadImages = function() {
+    for(var i = 0; i < 100; i++) {
+      $scope.images.push({id: i, src: "http://placehold.it/50x50"});
+    }
   }
 
   $scope.calculateTotal = function() {

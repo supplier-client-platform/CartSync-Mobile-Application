@@ -1,8 +1,85 @@
+<style>
+  .wide-as-needed {
+    overflow: scroll;
+    white-space: nowrap;
+  }
+  .scroll {
+    min-width: 100%;
+  }
+  .bar-subheader{
+    height: 115px !important;
+  }
+  a.button{
+    min-height: 110px !important;
+    margin-bottom: 0 !important;
+    width: 100px !important;
+    top: 3px !important;
+    left: 5px !important;
+  }
+
+  a.button .suggestion{
+    height: 110px !important;
+    top: 3px !important;
+    left: 5px !important;
+  }
+
+  .bar.bar-loading {
+    display: block;
+    height: 24px;
+
+    /* starts right below a normal header */
+    top: 44px;
+
+    /* make the text centered vertically and horizontally */
+    text-align: center;
+    padding: 0;
+    line-height: 24px;
+    /* transition 'sliding down' (check below)*/
+    -webkit-transition: 200ms all;
+  }
+  /*
+   * make the content's top changes animate.
+   * might not always look good, but looks
+   * good when our loader is added & removed
+   */
+  .has-header {
+    -webkit-transition: 200ms top;
+  }
+  .has-header.has-loading {
+    /* 44px (header) + 24px */
+    top: 68px;
+  }
+
+  /* make loading bar slide up/down */
+  .bar-loading.ng-enter,
+  .bar-loading.ng-leave.ng-leave-active {
+    height: 0;
+    border-width: 0px;
+  }
+  .bar-loading.ng-enter.ng-enter-active,
+  .bar-loading.ng-leave {
+    height: 24px;
+    border-width: 1px;
+  }
+
+</style>
+
 <ion-view style="" class=" " id="page9" title="My Cart" ng-init="initCart()">
   <ion-nav-buttons side="right">
     <button ng-if="cartList.length !== 0" ng-click="checkout()" class="button button-icon button-clear" ng-class="'icon ion-checkmark-round'"></button>
   </ion-nav-buttons>
-  <ion-content class="has-header" padding="false" style="background-color: #ECEFF1;">
+  <ion-header-bar class="bar-subheader" ng-if="cartList.length !== 0">
+
+    <ion-scroll direction="x" class="wide-as-needed" style="height: 120px">
+      <a class="button" ng-repeat="item in cartList">
+        <img ng-src="{{ item.item.img_url }}" style=" position: relative; left: -25px; top: 5px; height: 60px; width: 50px;">
+        <div style=" position: relative; left: -25px; text-align: center; width: 50px; font-size: 60%; white-space: pre-wrap; top: -55px; height: 50px">
+            <b>Rs.{{ item.item.price | number:2 }}</b>
+        </div>
+      </a>
+    </ion-scroll>
+  </ion-header-bar>
+  <ion-content class="has-header" padding="false" style="background-color: #ECEFF1;" ng-style="cartList.length == 0 ? { 'top':'0' } : { 'top': '160px' }">
     <div ng-if="cartList.length == 0" style="padding-top:6rem;">
       <img src="img/empty-cart.png" alt="" style="height:8rem;padding-left:6rem">
       <br>
@@ -13,6 +90,7 @@
     </div>
     <div ng-if="cartList.length !== 0">
       <div class="list" style="margin-bottom:0cm">
+
         <ion-list style="width: auto; height:68vh">
 
           <ion-item can-swipe="listCanSwipe" class="item item item-avatar" href="" style="background-color: #FFF;border-bottom:4px solid #ECEFF1; " ng-repeat="item in cartList">
