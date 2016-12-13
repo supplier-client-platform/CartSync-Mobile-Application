@@ -2,6 +2,8 @@ angular.module('app.myCartController', [])
 
 .controller('myCartCtrl', function($scope, $rootScope, $state, $ionicPopup, sharedCartService, $restClient, $ionicHistory, $ionicScrollDelegate) {
 
+  $scope.quantity = 0;
+
   $rootScope.$secondaryBtn = 'Checkout';
   $scope.initCart = function() {
     $scope.loadImages();
@@ -22,6 +24,61 @@ angular.module('app.myCartController', [])
       total = total + ($rootScope.cartList[i].qty * $rootScope.cartList[i].item.price);
     }
     return total;
+  };
+
+  $scope.increaseQty = function () {
+    $scope.quantity = parseInt($scope.quantity) + 1;
+  };
+  $scope.decreaseQty = function () {
+    $scope.quantity = parseInt($scope.quantity) - 1;
+  }
+  $scope.$watch('quantity', function () {
+    $scope.quantity = parseInt($scope.quantity);
+  });
+
+  $scope.addToCart = function (a) {
+    $scope.quantity = 0;
+    $scope.i = 0;
+    var itemId = a.id;
+    console.log(itemId);
+    //console.log("Item: " + JSON.stringify(a));
+    for (var i = 0; i < $rootScope.menu.length; i++) {
+      $scope.i = i;
+      if (parseInt($rootScope.menu[i].id) == parseInt(itemId)) {
+        if ($rootScope.menu[i].isAdded == true) {
+          $scope.removeFromCart(itemId);
+        }
+        else {
+          $ionicPopup.show({
+            template: '<div class="stepper row" style="font-size:29px"><button class="stepper__btn--decr" ng-disabled="quantity == 0" ng-click="decreaseQty()" style=" width: 20%">-</button><input style=" width: 70%" type="number" class="stepper__input" pattern="[0-9]" value="0" ng-model="quantity"/><button style=" width: 20%" ng-click="increaseQty()" class="stepper__btn--incr">+</button></div>'
+            , title: 'Please Enter Quantity'
+            , scope: $scope
+            , buttons: [{
+              text: 'Cancel'
+            }, {
+              text: '<b>Save</b>'
+              , type: 'button-positive'
+              , onTap: function (e) {
+                if ($scope.quantity == 0) {
+                  //don't allow the user to close unless he enters quantity
+                  e.preventDefault();
+                }
+                else {
+                  console.log($scope.quantity);
+                  $rootScope.menu[$scope.i].isAdded = true;
+                  console.log(JSON.stringify($rootScope.menu[$scope.i]));
+                  $rootScope.cartList.push({
+                    qty: $scope.quantity
+                    , item: $rootScope.menu[$scope.i]
+                  });
+                }
+              }
+            }]
+          });
+          break;
+        }
+      }
+    }
   };
 
   $scope.removeFromCart = function(a) {

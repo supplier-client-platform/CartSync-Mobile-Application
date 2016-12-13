@@ -68,17 +68,21 @@
   <ion-nav-buttons side="right">
     <button ng-if="cartList.length !== 0" ng-click="checkout()" class="button button-icon button-clear" ng-class="'icon ion-checkmark-round'"></button>
   </ion-nav-buttons>
-  <ion-header-bar class="bar-subheader" ng-if="cartList.length !== 0">
 
+  <!--Suggestion Bar-->
+  <ion-header-bar class="bar-subheader" ng-if="cartList.length !== 0">
     <ion-scroll direction="x" class="wide-as-needed" style="height: 120px">
-      <a class="button" ng-repeat="item in cartList">
-        <img ng-src="{{ item.item.img_url }}" style=" position: relative; left: -25px; top: 5px; height: 60px; width: 50px;">
+      <a class="button" ng-repeat="item in menu" ng-if="item.isAdded == false" ng-click="addToCart(item)">
+        <img ng-src="{{item.img_url}}" style=" position: relative; left: -25px; top: 5px; height: 60px; width: 50px;">
         <div style=" position: relative; left: -25px; text-align: center; width: 50px; font-size: 60%; white-space: pre-wrap; top: -55px; height: 50px">
-            <b>Rs.{{ item.item.price | number:2 }}</b>
+            <b>Rs.{{item.price | number:2}}</b>
         </div>
       </a>
     </ion-scroll>
   </ion-header-bar>
+
+
+
   <ion-content class="has-header" padding="false" style="background-color: #ECEFF1;" ng-style="cartList.length == 0 ? { 'top':'0' } : { 'top': '160px' }">
     <div ng-if="cartList.length == 0" style="padding-top:6rem;">
       <img src="img/empty-cart.png" alt="" style="height:8rem;padding-left:6rem">
