@@ -12,7 +12,7 @@
           <b>{{ order.status }}</b>
         </p>
       </ion-item>
-      <ion-infinite-scroll ng-if="myOrders.next_page_url !== null" on-infinite="retrieveOrders(myOrders.next_page_url)" distance="1%"></ion-infinite-scroll>
+      <ion-infinite-scroll ng-if="myOrders.next_page_url !== null" immediate-check="false" on-infinite="retrieveOrders(myOrders.next_page_url)" distance="1%"></ion-infinite-scroll>
     </ion-list>
   </ion-content>
 </ion-view>
