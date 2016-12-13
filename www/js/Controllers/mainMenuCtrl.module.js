@@ -75,9 +75,19 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
         });
     };
     $scope.retrieveProducts = function (id) {
+        //alert($rootScope.avatarUrl);
+
         if ($rootScope.modal) $rootScope.modal.remove();
         var storeId = (id == 'refresh' ? $rootScope.selectedShop : id);
         console.log("Retrieving products for shop " + storeId);
+
+        for(var i=0; i<$rootScope.allShops.length; i++){
+          if($rootScope.allShops[i].id == storeId){
+            $rootScope.avatarUrl = $rootScope.allShops[i].image;
+            break;
+          }
+        }
+
         $scope.retrieveFavourites(storeId);
         if (id === 'refresh') {
             sharedUtils.showLoadingWithText("Retrieving products... ");
@@ -133,23 +143,47 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
                 $rootScope.allShops = res;
                 sharedUtils.hideLoading();
             });
-            // $rootScope.db.getUserData().then(function(res) {
-            //
-            // });
-            //alert(JSON.stringify($scope.user_info));
+            $ionicModal.fromTemplateUrl('app/shopSelection.html', {
+              scope: $scope
+              , animation: 'slide-in-up'
+            }).then(function (modal) {
+              $rootScope.modal = modal;
+            });
+
+            $rootScope.shopSwitch = true;
+
+            $rootScope.cartList = [];
+
+            if($rootScope.menu !== undefined){
+              for (var i = 0; i < $rootScope.menu.length; i++) {
+                $rootScope.menu[i].isAdded = false;
+              };
+            }
+
             setTimeout(function () {
                 $scope.openModal();
             }, 100);
         }
-        else {
+        else if($rootScope.shopSwitch === undefined) {
             setTimeout(function () {
                 var selectedSeller = parseInt(localStorage.getItem("selectedShop"));
                 sharedUtils.showLoadingWithText("Retrieving products... ");
                 console.log("Selected seller: " + selectedSeller);
                 $rootScope.selectedShop = selectedSeller;
+
+                $restClient.getAllBusiness(function (res) {
+                  for(var i=0; i<res.length; i++){
+                    if(res[i].id == selectedSeller){
+                      $rootScope.avatarUrl = res[i].image;
+                      break;
+                    }
+                  }
+                });
+
                 $rootScope.menu = [];
                 $restClient.getProducts(selectedSeller, function (msg) {
                     $scope.retrieveFavourites(selectedSeller);
+                    $rootScope.menuResponse = msg;
                     $rootScope.menu = msg.data;
                     for (var i = 0; i < $rootScope.menu.length; i++) {
                         $rootScope.menu[i].isAdded = false;
