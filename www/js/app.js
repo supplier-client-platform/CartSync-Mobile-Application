@@ -113,6 +113,7 @@ angular.module('app', ['ionic', 'rest-client', 'app.controllers', 'app.routes', 
                 console.log($rootScope.notificationCount);
                 console.log(JSON.stringify(data));
                 $rootScope.$apply();
+                $.notify("Hello World");
               });
 
               $ionicSideMenuDelegate.canDragContent(true); // Sets up the sideMenu dragable
