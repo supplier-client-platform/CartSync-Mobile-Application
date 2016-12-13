@@ -155,6 +155,12 @@ angular.module('app.mainMenucontroller', []).controller('mainMenuCtrl', function
         console.log("order_mobile_notifications!!!");
         $rootScope.notificationCount += 1;
         console.log($rootScope.notificationCount);
+
+        var alertPopup = $ionicPopup.alert({
+          title: 'On The Go',
+          template: data.data.message
+        });
+
         console.log(JSON.stringify(data));
         $rootScope.$apply();
       });
